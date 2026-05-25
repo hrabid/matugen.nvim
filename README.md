@@ -54,7 +54,7 @@ return {
 
 ## VS Code Parity
 
-If you use my [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matugen-editors) setup, you can point the plugin at your existing `code-colors.jsonc` instead of the nvim-template — as long as it shares the same structure. both editors will simultaneously theme from from the same colorpalate.
+If you use my [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matugen-editors) setup, you can point the plugin at your existing `code-colors.jsonc` instead of the nvim-template — as long as it shares the same structure. both editors will simultaneously theme from the same color palette
 
 ---
 
