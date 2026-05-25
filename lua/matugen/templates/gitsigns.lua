@@ -1,5 +1,4 @@
 return function(c, hl)
-  -- gitsigns
   hl("GitSignsAdd", { fg = c.git_added })
   hl("GitSignsChange", { fg = c.git_modified })
   hl("GitSignsDelete", { fg = c.git_deleted })

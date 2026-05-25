@@ -1,5 +1,4 @@
 return function(c, hl)
-  -- avante.nvim
   hl("AvanteTitle", { fg = c.on_primary, bg = c.primary, bold = true })
   hl("AvanteReversedTitle", { fg = c.primary, bg = c.surface_container })
   hl("AvanteSubtitle", { fg = c.on_primary_container, bg = c.primary_container })

@@ -1,5 +1,4 @@
 return function(c, hl)
-  -- todo-comments
   hl("TodoBgTODO", { fg = c.on_primary, bg = c.primary, bold = true })
   hl("TodoFgTODO", { fg = c.primary })
   hl("TodoSignTODO", { fg = c.primary })

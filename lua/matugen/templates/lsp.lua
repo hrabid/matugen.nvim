@@ -1,5 +1,4 @@
 return function(c, hl)
-  -- ── LSP semantic tokens ────────────────────────────────────────
 
   hl("@lsp.type.class", { fg = c.primary })
   hl("@lsp.type.comment", { fg = c.outline, italic = true })
@@ -31,7 +30,6 @@ return function(c, hl)
   hl("@lsp.mod.defaultLibrary", { italic = true })
   hl("@lsp.mod.documentation", { italic = true })
 
-  -- ── LSP diagnostic UI ──────────────────────────────────────────
 
   hl("DiagnosticError", { fg = c.error })
   hl("DiagnosticWarn", { fg = c.tertiary })

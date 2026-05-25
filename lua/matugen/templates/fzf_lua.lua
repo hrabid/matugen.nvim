@@ -1,5 +1,4 @@
 return function(c, hl)
-  -- fzf-lua
   hl("FzfLuaNormal", { fg = c.on_surface, bg = c.surface_container })
   hl("FzfLuaBorder", { fg = c.primary, bg = c.surface_container })
   hl("FzfLuaTitle", { fg = c.on_primary, bg = c.primary, bold = true })

@@ -1,5 +1,4 @@
 return function(c, hl)
-  -- flash.nvim
   hl("FlashBackdrop", { fg = c.outline })
   hl("FlashCurrent", { fg = c.on_primary, bg = c.primary, bold = true })
   hl("FlashLabel", { fg = c.on_primary, bg = c.primary_container, bold = true })

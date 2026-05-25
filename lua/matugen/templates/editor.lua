@@ -1,5 +1,4 @@
 return function(c, hl)
-  -- Normal: no bg → transparency falls through to Kitty/Hyprland blur
   hl("Normal", { fg = c.on_surface, bg = nil })
   hl("NormalNC", { fg = c.on_surface_variant, bg = nil })
   hl("NormalFloat", { fg = c.on_surface, bg = c.surface_container })
