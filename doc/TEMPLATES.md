@@ -19,7 +19,7 @@ end
 
 ## Available Colors (`c`)
 
-The `c` object contains your theme's colors mapped from the JSONC file. You can see the full list of available keys in `lua/matugen/templates/palette.lua`. 
+The `c` object contains your theme's colors mapped from the JSONC file. You can see the full list of available keys in `lua/matugen/palette.lua`. 
 
 Key categories include:
 - **Surfaces:** `surface`, `surface_low`, `surface_container`, `surface_high`
