@@ -21,8 +21,7 @@ return {
       on_primary_container = hex("editorSuggestWidget.selectedForeground"),
 
       -- Secondary (cool grey-blue)
-      secondary = hex("editorWidget.border") ~= hex("editorWarning.foreground") and hex("editorWarning.foreground")
-        or "#c3c5dd",
+      secondary = hex("editorWarning.foreground"),
       secondary_container = hex("statusBarItem.remoteBackground"),
       on_secondary_container = hex("statusBarItem.remoteForeground"),
 
