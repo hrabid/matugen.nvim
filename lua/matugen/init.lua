@@ -31,8 +31,9 @@ function M.load()
     end
   end
 
+  local function hex(v) return v and (#v == 9 and v:sub(1, 7) or v) end
   local palette = require("matugen.palette")
-  c = palette.get_colors(function(k) return w[k] end)
+  c = palette.get_colors(function(k) return hex(w[k]) end)
 
   if not c then return notify("palette not found", 3) end
 
