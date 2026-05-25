@@ -1,49 +1,49 @@
 {
     "workbench.colorCustomizations": {
         // ── Editor ─────────────────────────────────────────────────────────
-        "editor.background": "{{colors.surface.default.hex}}",
-        "editor.foreground": "{{colors.on_surface.default.hex}}",
+        "editor.background": "{{colors.surface.default}}",
+        "editor.foreground": "{{colors.on_surface.default}}",
 
         // ── Gutter & line numbers ───────────────────────────────────────────
-        "editorLineNumber.foreground": "{{colors.outline.default.hex}}",
-        "editorLineNumber.activeForeground": "{{colors.primary.default.hex}}",
-        "editorGutter.addedBackground": "{{colors.primary.default.hex}}",
-        "editorGutter.modifiedBackground": "{{colors.secondary.default.hex}}",
-        "editorGutter.deletedBackground": "{{colors.error.default.hex}}",
+        "editorLineNumber.foreground": "{{colors.outline.default}}",
+        "editorLineNumber.activeForeground": "{{colors.primary.default}}",
+        "editorGutter.addedBackground": "{{colors.primary.default}}",
+        "editorGutter.modifiedBackground": "{{colors.secondary.default}}",
+        "editorGutter.deletedBackground": "{{colors.error.default}}",
 
         // ── Widgets ─────────────────────────────────────────────────────────
-        "editorWidget.border": "{{colors.outline_variant.default.hex}}",
+        "editorWidget.border": "{{colors.outline_variant.default}}",
 
         // ── Suggest widget ──────────────────────────────────────────────────
-        "editorSuggestWidget.selectedBackground": "{{colors.primary_container.default.hex}}",
-        "editorSuggestWidget.selectedForeground": "{{colors.on_primary_container.default.hex}}",
+        "editorSuggestWidget.selectedBackground": "{{colors.primary_container.default}}",
+        "editorSuggestWidget.selectedForeground": "{{colors.on_primary_container.default}}",
 
         // ── Diagnostics ─────────────────────────────────────────────────────
-        "editorError.foreground": "{{colors.error.default.hex}}",
-        "editorWarning.foreground": "{{colors.secondary.default.hex}}",
-        "editorInfo.foreground": "{{colors.tertiary.default.hex}}",
+        "editorError.foreground": "{{colors.error.default}}",
+        "editorWarning.foreground": "{{colors.secondary.default}}",
+        "editorInfo.foreground": "{{colors.tertiary.default}}",
 
         // ── Side bar ────────────────────────────────────────────────────────
-        "sideBar.background": "{{colors.surface_container_low.default.hex}}",
-        "sideBarSectionHeader.background": "{{colors.surface_container_high.default.hex}}",
+        "sideBar.background": "{{colors.surface_container_low.default}}",
+        "sideBarSectionHeader.background": "{{colors.surface_container_high.default}}",
 
         // ── Status bar ──────────────────────────────────────────────────────
-        "statusBar.background": "{{colors.surface_container.default.hex}}",
-        "statusBar.foreground": "{{colors.on_surface_variant.default.hex}}",
-        "statusBarItem.remoteBackground": "{{colors.secondary_container.default.hex}}",
-        "statusBarItem.remoteForeground": "{{colors.on_secondary_container.default.hex}}",
+        "statusBar.background": "{{colors.surface_container.default}}",
+        "statusBar.foreground": "{{colors.on_surface_variant.default}}",
+        "statusBarItem.remoteBackground": "{{colors.secondary_container.default}}",
+        "statusBarItem.remoteForeground": "{{colors.on_secondary_container.default}}",
 
         // ── Terminal ────────────────────────────────────────────────────────
-        "terminal.inactiveSelectionBackground": "{{colors.surface_container_highest.default.hex}}",
-        "terminal.ansiBrightRed": "{{colors.error_container.default.hex}}",
-        "terminal.ansiBrightGreen": "{{colors.tertiary_container.default.hex}}",
+        "terminal.inactiveSelectionBackground": "{{colors.surface_container_highest.default}}",
+        "terminal.ansiBrightRed": "{{colors.error_container.default}}",
+        "terminal.ansiBrightGreen": "{{colors.tertiary_container.default}}",
 
         // ── Buttons ─────────────────────────────────────────────────────────
-        "button.foreground": "{{colors.on_primary.default.hex}}",
+        "button.foreground": "{{colors.on_primary.default}}",
 
         // ── Selection / highlights ──────────────────────────────────────────
-        "editor.selectionBackground": "{{colors.primary.default.hex}}33",
-        "editor.wordHighlightBackground": "{{colors.secondary.default.hex}}33",
-        "editor.wordHighlightStrongBackground": "{{colors.tertiary.default.hex}}33"
+        "editor.selectionBackground": "{{colors.primary.default}}33",
+        "editor.wordHighlightBackground": "{{colors.secondary.default}}33",
+        "editor.wordHighlightStrongBackground": "{{colors.tertiary.default}}33"
     }
 }
