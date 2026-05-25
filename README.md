@@ -15,7 +15,7 @@ This allows you to maintain a perfectly consistent theme across your entire work
 To integrate with `matugen`, use the dedicated template provided in this repository:
 
 1. Copy [nvim-template.jsonc](nvim-template.jsonc) to your `matugen` templates folder.
-2. Configure `matugen` to generate the theme:
+2. add this to your matugen `config.toml` :
 
 ```toml
 [templates.neovim]
