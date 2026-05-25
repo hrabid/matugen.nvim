@@ -4,16 +4,16 @@
 
 `matugen.nvim` is a Material You colorscheme for Neovim built around a dedicated template system. It maps your matugen-generated colors directly to Neovim highlight groups through a semantic palette — no color recomputation, no compromises for other editors
 
-If you already use [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matugen-editors) for VS Code, you get cross-editor consistency for free with the same source colors driving both
+---
+## Click to watch the demo video below ↴
 
+[![matugen.nvim demo](https://img.youtube.com/vi/-O9JbfbJub0/maxresdefault.jpg)](https://youtu.be/-O9JbfbJub0)
 ---
 
 ## Requirements
 
 - Neovim 0.10+
 - [matugen](https://github.com/InioX/matugen) installed and configured
-
----
 
 ## Setup
 
