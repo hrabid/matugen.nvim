@@ -1,7 +1,5 @@
 # matugen.nvim
 
-> One wallpaper. Consistent colors across Neovim and VS Code — powered by [matugen](https://github.com/InioX/matugen)
-
 `matugen.nvim` is a Material You colorscheme for Neovim built around a dedicated template system. It maps your matugen-generated colors directly to Neovim highlight groups through a semantic palette — no color recomputation, no compromises for other editors
 
 ---
