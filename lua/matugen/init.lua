@@ -19,8 +19,7 @@ function M.load()
   local w = ok and data and data["workbench.colorCustomizations"]
   if not w then return notify("failed to parse JSONC from " .. path, 3) end
 
-  local function hex(v) return v and (#v == 9 and v:sub(1, 7) or v) end
-  local c, templates, hl = nil, {}, function(g, o) vim.api.nvim_set_hl(0, g, o) end
+  local templates, hl = {}, function(g, o) vim.api.nvim_set_hl(0, g, o) end
 
   -- Use namespaced template path
   for _, file in ipairs(vim.api.nvim_get_runtime_file("lua/matugen/templates/**/*.lua", true)) do
@@ -33,7 +32,7 @@ function M.load()
   end
 
   local palette = require("matugen.palette")
-  c = palette.get_colors(function(k) return hex(w[k]) end)
+  c = palette.get_colors(function(k) return w[k] end)
 
   if not c then return notify("palette not found", 3) end
 

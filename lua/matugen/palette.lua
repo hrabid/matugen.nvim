@@ -1,47 +1,47 @@
 return {
-  get_colors = function(hex)
+  get_colors = function(get)
     return {
       -- Core surfaces
-      surface = hex("editor.background"),
-      surface_low = hex("sideBar.background"),
-      surface_container = hex("statusBar.background"),
-      surface_high = hex("sideBarSectionHeader.background"),
-      surface_highest = hex("terminal.inactiveSelectionBackground"),
+      surface = get("editor.background"),
+      surface_low = get("sideBar.background"),
+      surface_container = get("statusBar.background"),
+      surface_high = get("sideBarSectionHeader.background"),
+      surface_highest = get("terminal.inactiveSelectionBackground"),
 
       -- Text
-      on_surface = hex("editor.foreground"),
-      on_surface_variant = hex("statusBar.foreground"),
-      outline = hex("editorLineNumber.foreground"),
-      outline_variant = hex("editorWidget.border"),
+      on_surface = get("editor.foreground"),
+      on_surface_variant = get("statusBar.foreground"),
+      outline = get("editorLineNumber.foreground"),
+      outline_variant = get("editorWidget.border"),
 
       -- Primary (periwinkle blue)
-      primary = hex("editorLineNumber.activeForeground"),
-      on_primary = hex("button.foreground"),
-      primary_container = hex("editorSuggestWidget.selectedBackground"),
-      on_primary_container = hex("editorSuggestWidget.selectedForeground"),
+      primary = get("editorLineNumber.activeForeground"),
+      on_primary = get("button.foreground"),
+      primary_container = get("editorSuggestWidget.selectedBackground"),
+      on_primary_container = get("editorSuggestWidget.selectedForeground"),
 
       -- Secondary (cool grey-blue)
-      secondary = hex("editorWarning.foreground"),
-      secondary_container = hex("statusBarItem.remoteBackground"),
-      on_secondary_container = hex("statusBarItem.remoteForeground"),
+      secondary = get("editorWarning.foreground"),
+      secondary_container = get("statusBarItem.remoteBackground"),
+      on_secondary_container = get("statusBarItem.remoteForeground"),
 
       -- Tertiary (dusty rose)
-      tertiary = hex("editorInfo.foreground"),
-      tertiary_container = hex("terminal.ansiBrightGreen"),
+      tertiary = get("editorInfo.foreground"),
+      tertiary_container = get("terminal.ansiBrightGreen"),
 
       -- Error
-      error = hex("editorError.foreground"),
-      error_container = hex("terminal.ansiBrightRed"),
+      error = get("editorError.foreground"),
+      error_container = get("terminal.ansiBrightRed"),
 
       -- Selection / highlights
-      selection_bg = hex("editor.selectionBackground"),
-      word_highlight = hex("editor.wordHighlightBackground"),
-      word_highlight_strong = hex("editor.wordHighlightStrongBackground"),
+      selection_bg = get("editor.selectionBackground"),
+      word_highlight = get("editor.wordHighlightBackground"),
+      word_highlight_strong = get("editor.wordHighlightStrongBackground"),
 
       -- Git
-      git_added = hex("editorGutter.addedBackground"),
-      git_modified = hex("editorGutter.modifiedBackground"),
-      git_deleted = hex("editorGutter.deletedBackground"),
+      git_added = get("editorGutter.addedBackground"),
+      git_modified = get("editorGutter.modifiedBackground"),
+      git_deleted = get("editorGutter.deletedBackground"),
     }
   end,
 }
