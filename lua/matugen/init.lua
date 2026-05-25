@@ -29,12 +29,13 @@ function M.load()
     local res = require(mod)
     if type(res) == "function" then
       table.insert(templates, res)
-    elseif mod:find("palette$") then
-      c = res.get_colors(function(k) return hex(w[k]) end)
     end
   end
 
-  if not c then return notify("palette not found in templates", 3) end
+  local palette = require("matugen.palette")
+  c = palette.get_colors(function(k) return hex(w[k]) end)
+
+  if not c then return notify("palette not found", 3) end
 
   vim.cmd("highlight clear")
   if vim.fn.exists("syntax_on") == 1 then vim.cmd("syntax reset") end
