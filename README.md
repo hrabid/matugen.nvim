@@ -15,7 +15,7 @@ This allows you to maintain a perfectly consistent theme across your entire work
 To integrate with `matugen`, use the dedicated template provided in this repository:
 
 1. Copy [nvim-template.jsonc](nvim-template.jsonc) to your `matugen` templates folder
-   > **Note:**If you use my [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matugen-editors) setup, you can also use your existing `code-colors.jsonc` if it shares the same structure
+   >Note:If you use my [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matugen-editors) setup, you can also use your existing `code-colors.jsonc` if it shares the same structure
 
 2. add this to your matugen `config.toml` :
 
