@@ -3,10 +3,10 @@
 `matugen.nvim` is a Material You colorscheme for Neovim built around a dedicated template system. It maps your matugen-generated colors directly to Neovim highlight groups through a semantic palette — no color recomputation, no compromises for other editors
 
 ---
+
 ## Click to watch the demo video below ↴
 
-[![matugen.nvim demo](https://img.youtube.com/vi/-O9JbfbJub0/maxresdefault.jpg)](https://youtu.be/-O9JbfbJub0)
----
+## [![matugen.nvim demo](https://img.youtube.com/vi/-O9JbfbJub0/maxresdefault.jpg)](https://youtu.be/-O9JbfbJub0)
 
 ## Requirements
 
@@ -46,6 +46,14 @@ return {
     end,
   },
 }
+```
+
+1. Hyprland opacity
+
+Apply opacity and blur via Hyprland window rules orther wise neovim won't look good without it:
+
+```conf
+windowrule = match:class kitty, match:title nvim, opacity 0.7 0.8
 ```
 
 ---
