@@ -1,6 +1,6 @@
 return {
   get_colors = function(get)
-    local fallback = require("matugen.fallback")
+    local fallback = require("matugen.fallback_palette")
     return {
       -- Core surfaces
       surface = get("editor.background") or fallback.surface,
