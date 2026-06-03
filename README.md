@@ -50,7 +50,7 @@ return {
 
 1. Hyprland opacity
 
-Apply opacity and blur via Hyprland window rules orther wise neovim won't look good without it:
+Apply opacity and blur via Hyprland window rules other wise neovim won't look good without it:
 
 ```conf
 windowrule = match:class kitty, match:title nvim, opacity 0.7 0.8
