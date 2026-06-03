@@ -12,14 +12,14 @@ function M.load()
   local w = {}
 
   if not f then
-    notify("Could not open color file at: " .. path .. "\nFalling back to color scheme", vim.log.levels.WARN)
+    notify("Could not open color file at: " .. path .. "\nUsing fallback color scheme", vim.log.levels.WARN)
   else
     local raw = f:read("*a"):gsub("/%*.-%*/", ""):gsub("([^:])//[^\n]*", "%1")
     f:close()
 
     local ok, data = pcall(vim.json.decode, raw)
     if not ok or not data or not data["workbench.colorCustomizations"] then
-      notify("Failed to parse JSONC from " .. path .. "\nFalling back to color scheme", vim.log.levels.WARN)
+      notify("Failed to parse JSONC from " .. path .. "\nUsing fallback color scheme", vim.log.levels.WARN)
     else
       w = data["workbench.colorCustomizations"]
     end
