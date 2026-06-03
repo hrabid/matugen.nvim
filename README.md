@@ -80,6 +80,12 @@ Or reload in neovim without the signal:
 
 ---
 
+## Robust Fallbacks
+
+If the plugin fails to load or parse your generated palette JSONC file, it will automatically degrade to a comprehensive, cohesive dark-themed fallback color scheme. You will receive a clear warning notification, ensuring you are aware that the theme has defaulted, while your Neovim UI remains readable and functional.
+
+---
+
 ## Customization
 
 The plugin is built to be extended.
