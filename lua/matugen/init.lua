@@ -9,15 +9,21 @@ end
 function M.load()
   local path = M.opts.jsonc_path
   local f = io.open(path, "r")
-  if not f then
-    return notify("Could not open color file at: " .. path .. ". Check that the file exists.", 3)
-  end
-  local raw = f:read("*a"):gsub("/%*.-%*/", ""):gsub("([^:])//[^\n]*", "%1")
-  f:close()
+  local w = {}
 
-  local ok, data = pcall(vim.json.decode, raw)
-  local w = ok and data and data["workbench.colorCustomizations"]
-  if not w then return notify("failed to parse JSONC from " .. path, 3) end
+  if not f then
+    notify("Could not open color file at: " .. path .. ". Using fallback theme.", vim.log.levels.WARN)
+  else
+    local raw = f:read("*a"):gsub("/%*.-%*/", ""):gsub("([^:])//[^\n]*", "%1")
+    f:close()
+
+    local ok, data = pcall(vim.json.decode, raw)
+    if not ok or not data or not data["workbench.colorCustomizations"] then
+      notify("Failed to parse JSONC from " .. path .. ". Using fallback theme.", vim.log.levels.WARN)
+    else
+      w = data["workbench.colorCustomizations"]
+    end
+  end
 
   local templates, hl = {}, function(g, o) vim.api.nvim_set_hl(0, g, o) end
 
