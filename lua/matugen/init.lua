@@ -3,7 +3,7 @@ local M = {
 }
 
 local function notify(msg, lvl)
-  vim.notify("matugen: " .. msg, lvl or vim.log.levels.INFO)
+  vim.notify("matugen:\n" .. msg, lvl or vim.log.levels.INFO)
 end
 
 function M.load()
