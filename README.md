@@ -93,6 +93,12 @@ To extend it, see [Creating Custom Templates](doc/TEMPLATES.md)
 
 ---
 
+## Contributing
+
+Contributions are more than welcome! If you want to add support for another plugin or fix a bug, feel free to open a Pull Request. Let's make this colorscheme even better together!
+
+---
+
 ## License
 
 MIT
