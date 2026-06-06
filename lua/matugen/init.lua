@@ -1,7 +1,7 @@
 local M = {}
 
--- Import user-defined opts from global variable if set
-M.opts = vim.g.matugen_opts or {}
+-- opts will be provided via setup(opts)
+
 
 
 local function notify(msg, lvl)
@@ -9,7 +9,7 @@ local function notify(msg, lvl)
 end
 
 function M.load()
-  local path = (M.opts or {}).jsonc_path
+  local path = M.opts.jsonc_path
   local w = {}
 
   if not path then
@@ -56,7 +56,7 @@ function M.load()
 end
 
 function M.setup(opts)
-  M.opts = vim.tbl_deep_extend("force", M.opts, opts or {})
+  M.opts = opts or {}
   if M.opts.load_theme then
     M.load_theme()
   else
