@@ -1,12 +1,15 @@
 local M = {}
 
+-- Import user-defined opts from global variable if set
+M.opts = vim.g.matugen_opts or {}
+
 
 local function notify(msg, lvl)
   vim.notify("matugen: " .. msg, lvl or vim.log.levels.INFO)
 end
 
 function M.load()
-  local path = M.opts.jsonc_path
+  local path = (M.opts or {}).jsonc_path
   local w = {}
 
   if not path then
