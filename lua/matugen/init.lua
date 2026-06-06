@@ -1,5 +1,5 @@
 local M = {
-  opts = {},
+  opts = {load_theme = true},
 }
 
 local function notify(msg, lvl)
@@ -55,6 +55,16 @@ end
 
 function M.setup(opts)
   M.opts = vim.tbl_deep_extend("force", M.opts, opts or {})
+  if M.opts.load_theme then
+    M.load_theme()
+  else
+    notify("load_theme disabled; theme not loaded", vim.log.levels.WARN)
+  end
+end
+
+function M.load_theme()
+  M.load()
+  vim.cmd.colorscheme("matugen")
 end
 
 return M
