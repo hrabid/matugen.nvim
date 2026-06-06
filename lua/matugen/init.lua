@@ -1,6 +1,5 @@
-local M = {
-  opts = {load_theme = true},
-}
+local M = {}
+
 
 local function notify(msg, lvl)
   vim.notify("matugen: " .. msg, lvl or vim.log.levels.INFO)
