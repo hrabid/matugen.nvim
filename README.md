@@ -57,7 +57,7 @@ return {
 Without blur and opacity, transparency won't look right:
 
 ```conf
-windowrule = match:class kitty, match:title nvim, opacity 0.7 0.8
+windowrule = match:class kitty, match:title nvim, opacity 0.8
 ```
 
 ---
@@ -101,4 +101,3 @@ Contributions are more than welcome! If you want to add support for another plug
 ## License
 
 MIT
-
