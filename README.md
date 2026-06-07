@@ -56,7 +56,7 @@ return {
 
 Without blur and opacity, transparency won't look right:
 
-```conf
+```hyprlang
 windowrule = match:class kitty, match:title nvim, opacity 0.8
 ```
 
