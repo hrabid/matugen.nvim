@@ -42,18 +42,17 @@ return {
     priority = 1000,
     opts = {
       jsonc_path = vim.fn.expand("~/.config/matugen/themes/nvim-colors.jsonc"),
+
+      -- new flag to toggle the theme
+      load_theme = true,
     },
-    config = function(_, opts)
-      require("matugen").setup(opts)
-      vim.cmd.colorscheme("matugen")
-    end,
   },
 }
 ```
 
 > **Note:** If the palette file fails to load, the plugin falls back to a built-in dark theme and notifies you
 
-**4. Hyprland opacity** *(optional but recommended)*
+**4. Hyprland opacity** _(optional but recommended)_
 
 Without blur and opacity, transparency won't look right:
 
@@ -102,3 +101,4 @@ Contributions are more than welcome! If you want to add support for another plug
 ## License
 
 MIT
+
