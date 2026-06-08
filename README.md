@@ -21,7 +21,7 @@
 
 **1. Copy the template**
 
-Copy [nvim-colors.jsonc](nvim-colors.jsonc) to your matugen templates folder
+Copy [nvim-colors.jsonc](https://gist.github.com/Senal-D-A-Gunaratna/223f63acacab31ccc15030121896c6d1#file-nvim-colors-jsonc) from this gist to your matugen templates folder
 
 **2. Add to your `config.toml`**
 
