@@ -13,6 +13,7 @@
 ## Requirements
 
 - Neovim 0.10+
+- lazy.nvim
 - [matugen](https://github.com/InioX/matugen) installed and configured
 
 ---
@@ -80,7 +81,7 @@ Or from inside Neovim:
 
 ## VS Code Parity
 
-Using [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matugen-editors)? Point the plugin at your existing `code-colors.jsonc` instead — as long as the structure matches, both editors theme from the same palette simultaneously
+if your using my [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matugen-editors) setup Point the plugin at your existing `code-colors.jsonc` instead — as long as the structure matches, both editors theme from the same palette simultaneously
 
 ---
 
