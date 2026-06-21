@@ -57,8 +57,11 @@ return {
 
 Without blur and opacity, transparency won't look right:
 
-```hyprlang
-windowrule = match:class kitty, match:title nvim, opacity 0.8
+```lua
+hl.window_rule({
+ match = { class = "kitty", title = "nvim" },
+ opacity = "0.7",
+})
 ```
 
 ---
