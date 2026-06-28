@@ -6,6 +6,8 @@
 
 ## Demo
 
+Click to watch the demo video below ↴
+
 ## [![matugen.nvim demo](https://img.youtube.com/vi/-O9JbfbJub0/maxresdefault.jpg)](https://youtu.be/-O9JbfbJub0)
 
 ---
