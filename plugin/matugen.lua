@@ -13,5 +13,5 @@ end))
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "lazy", "mason", "lspinfo", "null-ls-info", "checkhealth" },
-  callback = function() vim.wo.winblend = 10 end,
+  callback = function() vim.wo.winblend = 0 end,
 })
