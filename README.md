@@ -98,10 +98,8 @@ To extend it, see [Creating Custom Templates](doc/TEMPLATES.md).
 
 ## Supported Plugins
 
-The following plugins are supported via built‑in templates in `lua/matugen/templates`:
-
 <details>
-<summary>🔌 Supported Plugins</summary>
+<summary>The following plugins are supported via built‑in templates in `lua/matugen/templates`:</summary>
 
 - [aerial.nvim](lua/matugen/templates/aerial.lua)
 - [avante.nvim](lua/matugen/templates/avante.lua)
