@@ -22,9 +22,6 @@
     "strikethrough",
     "undercurl",
     "winblend",
-    "windowrule",
-    "hyprlang",
-    "1. Copy the template",
-    "## Live Reload"
+    "windowrule"
   ]
 }
