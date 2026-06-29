@@ -96,6 +96,44 @@ To extend it, see [Creating Custom Templates](doc/TEMPLATES.md)
 
 ---
 
+## Supported Plugins
+
+The following plugins are supported via built‑in templates in `lua/matugen/templates`:
+
+- aerial – [aerial.lua](lua/matugen/templates/aerial.lua)
+- avante – [avante.lua](lua/matugen/templates/avante.lua)
+- barbecue – [barbecue.lua](lua/matugen/templates/barbecue.lua)
+- blink – [blink.lua](lua/matugen/templates/blink.lua)
+- bufferline – [bufferline.lua](lua/matugen/templates/bufferline.lua)
+- cmp – [cmp.lua](lua/matugen/templates/cmp.lua)
+- diffview – [diffview.lua](lua/matugen/templates/diffview.lua)
+- dressing – [dressing.lua](lua/matugen/templates/dressing.lua)
+- dropbar – [dropbar.lua](lua/matugen/templates/dropbar.lua)
+- editor – [editor.lua](lua/matugen/templates/editor.lua)
+- flash – [flash.lua](lua/matugen/templates/flash.lua)
+- fzf_lua – [fzf_lua.lua](lua/matugen/templates/fzf_lua.lua)
+- gitsigns – [gitsigns.lua](lua/matugen/templates/gitsigns.lua)
+- ibl – [ibl.lua](lua/matugen/templates/ibl.lua)
+- lsp – [lsp.lua](lua/matugen/templates/lsp.lua)
+- lualine – [lualine.lua](lua/matugen/templates/lualine.lua)
+- mason – [mason.lua](lua/matugen/templates/mason.lua)
+- mini – [mini.lua](lua/matugen/templates/mini.lua)
+- neo_tree – [neo_tree.lua](lua/matugen/templates/neo_tree.lua)
+- noice – [noice.lua](lua/matugen/templates/noice.lua)
+- nvim_tree – [nvim_tree.lua](lua/matugen/templates/nvim_tree.lua)
+- oil – [oil.lua](lua/matugen/templates/oil.lua)
+- render_markdown – [render_markdown.lua](lua/matugen/templates/render_markdown.lua)
+- snacks – [snacks.lua](lua/matugen/templates/snacks.lua)
+- syntax – [syntax.lua](lua/matugen/templates/syntax.lua)
+- telescope – [telescope.lua](lua/matugen/templates/telescope.lua)
+- todo_comments – [todo_comments.lua](lua/matugen/templates/todo_comments.lua)
+- trouble – [trouble.lua](lua/matugen/templates/trouble.lua)
+- twilight – [twilight.lua](lua/matugen/templates/twilight.lua)
+- whichkey – [whichkey.lua](lua/matugen/templates/whichkey.lua)
+- zen_mode – [zen_mode.lua](lua/matugen/templates/zen_mode.lua)
+
+---
+
 ## Contributing
 
 Contributions are more than welcome! If you want to add support for another plugin or fix a bug, feel free to open a Pull Request. Let's make this colorscheme even better together!
