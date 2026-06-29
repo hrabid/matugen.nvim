@@ -63,13 +63,13 @@ function M.load()
 	for _, t in ipairs(templates) do
 		t(c, hl)
 	end
-  vim.g.matugen_last_reload = os.time()
-  vim.g.matugen_template_count = #templates
-  vim.g.matugen_status = "Loaded successfully"
-  M._last_reload = vim.g.matugen_last_reload
-  M._template_count = vim.g.matugen_template_count
-  M._status = vim.g.matugen_status
-  M._palette_path = vim.fn.expand(M.opts.jsonc_path or "~/.config/matugen/themes/nvim-colors.jsonc")
+	vim.g.matugen_last_reload = os.time()
+	vim.g.matugen_template_count = #templates
+	vim.g.matugen_status = "Loaded successfully"
+	M._last_reload = vim.g.matugen_last_reload
+	M._template_count = vim.g.matugen_template_count
+	M._status = vim.g.matugen_status
+	M._palette_path = vim.fn.expand(M.opts.jsonc_path)
 end
 
 function M.setup(opts)
@@ -82,11 +82,11 @@ function M.setup(opts)
 end
 
 function M.load_theme()
-  if not M.opts.load_theme then
-    return
-  end
-  M.load()
-  vim.cmd.colorscheme("matugen")
+	if not M.opts.load_theme then
+		return
+	end
+	M.load()
+	vim.cmd.colorscheme("matugen")
 end
 
 return M
