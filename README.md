@@ -84,7 +84,7 @@ Or from inside Neovim:
 
 ## VS Code Parity
 
-if your using my [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matugen-editors) setup Point the plugin at your existing `code-colors.jsonc` instead — as long as the structure matches, both editors theme from the same palette simultaneously
+if you're using my [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matugen-editors) setup, Point the plugin at your existing `code-colors.jsonc` instead — as long as the structure matches, both editors theme from the same palette simultaneously
 
 ---
 
