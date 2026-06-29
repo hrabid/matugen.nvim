@@ -80,19 +80,21 @@ Or from inside Neovim:
 :MatugenReload
 ```
 
+## Plugin status checking
+
+You can query the current status of matugen with the command:
+
+```vim
+:MatugenStatus
+```
+
+This will display information such as whether the palette is loaded, any errors, and the current theme.
+
 ---
 
 ## VS Code Parity
 
 if you're using my [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matugen-editors) setup, Point the plugin at your existing `code-colors.jsonc` instead — as long as the structure matches, both editors theme from the same palette simultaneously
-
----
-
-## Customization
-
-All highlight groups derive from a single semantic palette in `lua/matugen/palette.lua`. Adding support for a new plugin or UI component stays consistent by design.
-
-To extend it, see [Creating Custom Templates](doc/TEMPLATES.md).
 
 ---
 
@@ -134,6 +136,14 @@ To extend it, see [Creating Custom Templates](doc/TEMPLATES.md).
 - [zen-mode.nvim](lua/matugen/templates/zen_mode.lua)
 
 </details>
+
+---
+
+## Customization
+
+All highlight groups derive from a single semantic palette in `lua/matugen/palette.lua`. Adding support for a new plugin or UI component stays consistent by design.
+
+To extend it, see [Creating Custom Templates](doc/TEMPLATES.md).
 
 ---
 
