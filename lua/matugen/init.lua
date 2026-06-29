@@ -7,7 +7,7 @@ local function notify(msg, lvl)
 end
 
 function M.load()
-	local path = M.opts.jsonc_path
+	local path = vim.fn.expand(M.opts.jsonc_path or "~/.config/matugen/themes/nvim-colors.jsonc")
 	local w = {}
 
 	if not path then
