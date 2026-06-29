@@ -90,15 +90,18 @@ if you're using my [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matu
 
 ## Customization
 
-All highlight groups derive from a single semantic palette in `lua/matugen/palette.lua`. Adding support for a new plugin or UI component stays consistent by design
+All highlight groups derive from a single semantic palette in `lua/matugen/palette.lua`. Adding support for a new plugin or UI component stays consistent by design.
 
-To extend it, see [Creating Custom Templates](doc/TEMPLATES.md)
+To extend it, see [Creating Custom Templates](doc/TEMPLATES.md).
 
 ---
 
 ## Supported Plugins
 
 The following plugins are supported via built‑in templates in `lua/matugen/templates`:
+
+<details>
+<summary>🔌 Supported Plugins</summary>
 
 - [aerial.nvim](lua/matugen/templates/aerial.lua)
 - [avante.nvim](lua/matugen/templates/avante.lua)
@@ -131,6 +134,8 @@ The following plugins are supported via built‑in templates in `lua/matugen/tem
 - [twilight.nvim](lua/matugen/templates/twilight.lua)
 - [which-key.nvim](lua/matugen/templates/whichkey.lua)
 - [zen-mode.nvim](lua/matugen/templates/zen_mode.lua)
+
+</details>
 
 ---
 
