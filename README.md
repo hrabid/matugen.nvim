@@ -141,9 +141,9 @@ if you're using my [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matu
 
 ## Customization
 
-All highlight groups derive from a single semantic palette in `lua/matugen/palette.lua`. Adding support for a new plugin or UI component stays consistent by design.
+All highlight groups derive from a single semantic palette in `lua/matugen/palette.lua`. Adding support for a new plugin or UI component stays consistent by design
 
-To extend it, see [Creating Custom Templates](doc/TEMPLATES.md).
+To extend it, see [Creating Custom Templates](doc/TEMPLATES.md)
 
 ---
 
