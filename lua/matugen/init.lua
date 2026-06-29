@@ -63,6 +63,9 @@ function M.load()
 	for _, t in ipairs(templates) do
 		t(c, hl)
 	end
+  vim.g.matugen_last_reload = os.time()
+  vim.g.matugen_template_count = #templates
+  vim.g.matugen_status = "Loaded successfully"
 end
 
 function M.setup(opts)
