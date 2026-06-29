@@ -12,10 +12,12 @@ signal:start("sigusr1", vim.schedule_wrap(function()
 end))
 vim.api.nvim_create_user_command("MatugenStatus", function()
   local matugen_mod = require("matugen")
-  local path = vim.fn.expand(matugen_mod.opts.jsonc_path or "~/.config/matugen/themes/nvim-colors.jsonc")
-  local status = vim.g.matugen_status or "Not loaded"
-  local count = vim.g.matugen_template_count or 0
-  local last = vim.g.matugen_last_reload and os.date("%H:%M:%S", vim.g.matugen_last_reload) or "Never"
+  -- Refresh diagnostics before reporting
+  pcall(matugen_mod.load)
+  local path = matugen_mod._palette_path or vim.fn.expand(matugen_mod.opts.jsonc_path or "~/.config/matugen/themes/nvim-colors.jsonc")
+  local status = matugen_mod._status or "Not loaded"
+  local count = matugen_mod._template_count or 0
+  local last = matugen_mod._last_reload and os.date("%H:%M:%S", matugen_mod._last_reload) or "Never"
   local msg = string.format("Palette Path: %s\nStatus: %s (%d templates active)\nLast Reload: %s", path, status, count, last)
   vim.notify(msg, vim.log.levels.INFO)
 end, {})

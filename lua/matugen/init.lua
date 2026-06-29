@@ -66,6 +66,10 @@ function M.load()
   vim.g.matugen_last_reload = os.time()
   vim.g.matugen_template_count = #templates
   vim.g.matugen_status = "Loaded successfully"
+  M._last_reload = vim.g.matugen_last_reload
+  M._template_count = vim.g.matugen_template_count
+  M._status = vim.g.matugen_status
+  M._palette_path = vim.fn.expand(M.opts.jsonc_path or "~/.config/matugen/themes/nvim-colors.jsonc")
 end
 
 function M.setup(opts)
