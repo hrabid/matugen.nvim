@@ -22,6 +22,10 @@
     "strikethrough",
     "undercurl",
     "winblend",
-    "windowrule"
+    "windowrule",
+    "bufferline",
+    "diffview",
+    "dropbar",
+    "gitsigns"
   ]
 }
