@@ -63,13 +63,14 @@ function M.load()
 	for _, t in ipairs(templates) do
 		t(c, hl)
 	end
-	vim.g.matugen_last_reload = os.time()
-	vim.g.matugen_template_count = #templates
-	vim.g.matugen_status = "Loaded successfully"
-	M._last_reload = vim.g.matugen_last_reload
-	M._template_count = vim.g.matugen_template_count
-	M._status = vim.g.matugen_status
-	M._palette_path = vim.fn.expand(M.opts.jsonc_path)
+local now = os.time()
+M._last_reload = now
+M._template_count = #templates
+M._status = "Loaded successfully"
+M._palette_path = vim.fn.expand(M.opts.jsonc_path)
+vim.g.matugen_last_reload = now
+vim.g.matugen_template_count = M._template_count
+vim.g.matugen_status = M._status
 end
 
 function M.setup(opts)
