@@ -88,7 +88,7 @@ You can query the current status of matugen with the command:
 :MatugenStatus
 ```
 
-This will display information such as whether the palette is loaded, any errors, and the current theme.
+This will display information such as whether the palette is loaded, last reload time, and the current jsonc theme file
 
 ---
 
