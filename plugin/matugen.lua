@@ -16,8 +16,7 @@ signal:start(
 
 vim.api.nvim_create_user_command("MatugenStatus", function()
 	local matugen_mod = require("matugen")
-	-- Refresh diagnostics before reporting
-	pcall(matugen_mod.load)
+	-- Show status info
 	local path = matugen_mod._palette_path
 	local status = matugen_mod._status or "Not loaded"
 	local count = matugen_mod._template_count or 0
