@@ -55,12 +55,27 @@ end
 -- on_done: optional function called after highlights are applied.
 local function _apply_highlights(w, path, on_done)
 	local templates = _load_templates()
+	local nvim_set_hl = vim.api.nvim_set_hl
 	local hl = function(g, o)
-		vim.api.nvim_set_hl(0, g, o)
+		nvim_set_hl(0, g, o)
 	end
 
 	local function hex(v)
-		return v and (#v == 9 and v:sub(1, 7) or v)
+		if not v then
+			return nil
+		end
+		if v:sub(1, 1) ~= "#" then
+			return v
+		end
+		local len = #v
+		if len == 9 then
+			return v:sub(1, 7) -- Strip alpha: #RRGGBBAA -> #RRGGBB
+		elseif len == 5 or len == 4 then
+			-- Expand #RGBA -> #RRGGBB (ignoring alpha) or #RGB -> #RRGGBB
+			local r, g, b = v:sub(2, 2), v:sub(3, 3), v:sub(4, 4)
+			return "#" .. r .. r .. g .. g .. b .. b
+		end
+		return v
 	end
 	local palette = require("matugen.palette")
 	local c = palette.get_colors(function(k)
