@@ -10,8 +10,10 @@ function M.load()
 	local path = vim.fn.expand(M.opts.jsonc_path)
 	local w = {}
 
-	if not path then
+	if not path or path == "" then
 		notify("No JSONC path configured. Using fallback color scheme", vim.log.levels.WARN)
+	elseif not path:match("%.[Jj][Ss][Oo][Nn][Cc]?$") then
+		notify("jsonc_path must end in .json or .jsonc — refusing to open: " .. path, vim.log.levels.ERROR)
 	else
 		local f = io.open(path, "r")
 		if not f then
@@ -67,7 +69,7 @@ local now = os.time()
 M._last_reload = now
 M._template_count = #templates
 M._status = "Loaded successfully"
-M._palette_path = vim.fn.expand(M.opts.jsonc_path)
+	M._palette_path = path
 vim.g.matugen_last_reload = now
 vim.g.matugen_template_count = M._template_count
 vim.g.matugen_status = M._status
