@@ -74,7 +74,10 @@ vim.g.matugen_status = M._status
 end
 
 function M.setup(opts)
-	M.opts = opts
+	M.opts = vim.tbl_deep_extend("force", {
+		jsonc_path = "",
+		load_theme = true,
+	}, opts or {})
 	if M.opts.load_theme then
 		M.load_theme()
 	else
