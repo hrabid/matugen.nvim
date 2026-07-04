@@ -40,14 +40,17 @@ Example configuration with lazy.nvim:
 
 *:MatugenReload*
 	Reloads the theme from the currently configured `jsonc_path`. This
-	is useful if you have modified your colors externally.
+	is useful if you have modified your colors externally. This also
+	clears the template cache, forcing Neovim to re-read and compile
+	templates from the filesystem.
 
 ==============================================================================
 4. Signal Support				*matugen-signals*
 
 The plugin listens for the `SIGUSR1` signal to trigger a theme reload.
 This allows you to automate theme updates via scripts (e.g., when your
-wallpaper changes).
+wallpaper changes). Signal-based reloads run asynchronously and use
+the in-memory template cache to prevent blocking the editor loop.
 
 Example usage:
 >bash
