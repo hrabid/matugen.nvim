@@ -103,9 +103,6 @@ function M.setup(opts)
 end
 
 function M.load_theme()
-	if not M.opts.load_theme then
-		return
-	end
 	M.load()
 	vim.cmd.colorscheme("matugen")
 end
