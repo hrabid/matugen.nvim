@@ -1,6 +1,7 @@
 local matugen = require("matugen")
 
 vim.api.nvim_create_user_command("MatugenReload", function()
+	matugen.reload_templates()
 	matugen.load_theme(true)
 	vim.notify("matugen: theme reloaded")
 end, {})
