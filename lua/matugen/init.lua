@@ -65,14 +65,15 @@ function M.load()
 	for _, t in ipairs(templates) do
 		t(c, hl)
 	end
-local now = os.time()
-M._last_reload = now
-M._template_count = #templates
-M._status = "Loaded successfully"
-	M._palette_path = path
-vim.g.matugen_last_reload = now
-vim.g.matugen_template_count = M._template_count
-vim.g.matugen_status = M._status
+	local now = os.time()
+	M._last_reload = now
+	M._template_count = #templates
+	M._status = "Loaded successfully"
+	M._palette_path = vim.fn.fnamemodify(path, ":~")
+	vim.g.matugen_last_reload = now
+	vim.g.matugen_template_count = M._template_count
+	-- matugen_status intentionally not written to vim.g to avoid
+	-- leaking the palette path to other plugins via global state
 end
 
 function M.setup(opts)
