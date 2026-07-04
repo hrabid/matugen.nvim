@@ -6,6 +6,50 @@ local function notify(msg, lvl)
 	vim.notify("matugen: " .. msg, lvl or vim.log.levels.INFO)
 end
 
+-- Load template functions from disk and cache them in M._templates.
+-- Templates are Lua files that never change at runtime, so we only
+-- pay the glob + loadfile cost once. Call M.reload_templates() to
+-- force a refresh (e.g. after adding a new template file).
+local function _load_templates()
+	if M._templates then
+		return M._templates
+	end
+
+	local templates = {}
+	-- Pin template loading to this plugin's own directory.
+	-- Using debug.getinfo + loadfile instead of nvim_get_runtime_file + require
+	-- prevents rogue plugins from injecting files via runtimepath.
+	local _self = debug.getinfo(1, "S").source:sub(2) -- strip leading "@"
+	local _plugin_lua_dir = _self:match("^(.*)/init%.lua$")
+	local _templates_dir = _plugin_lua_dir .. "/templates"
+	local _real_tpl_dir = vim.fn.resolve(_templates_dir)
+
+	for _, file in ipairs(vim.fn.glob(_templates_dir .. "/**/*.lua", false, true)) do
+		-- Guard: only load files that are strictly inside our templates directory
+		local real_file = vim.fn.resolve(file)
+		if real_file:sub(1, #_real_tpl_dir + 1) == _real_tpl_dir .. "/" then
+			local chunk, err = loadfile(real_file)
+			if chunk then
+				local ok_chunk, res = pcall(chunk)
+				if ok_chunk and type(res) == "function" then
+					table.insert(templates, res)
+				end
+			else
+				notify("Failed to load template " .. real_file .. ": " .. tostring(err), vim.log.levels.WARN)
+			end
+		end
+	end
+
+	M._templates = templates
+	return templates
+end
+
+-- Force-reload templates from disk on the next M.load() call.
+-- Useful when template files have been added or removed at runtime.
+function M.reload_templates()
+	M._templates = nil
+end
+
 function M.load()
 	local path = vim.fn.expand(M.opts.jsonc_path)
 	local w = {}
@@ -37,32 +81,9 @@ function M.load()
 		end
 	end
 
-	local templates, hl = {}, function(g, o)
+	local templates = _load_templates()
+	local hl = function(g, o)
 		vim.api.nvim_set_hl(0, g, o)
-	end
-
-	-- Pin template loading to this plugin's own directory.
-	-- Using debug.getinfo + loadfile instead of nvim_get_runtime_file + require
-	-- prevents rogue plugins from injecting files via runtimepath.
-	local _self = debug.getinfo(1, "S").source:sub(2) -- strip leading "@"
-	local _plugin_lua_dir = _self:match("^(.*)/init%.lua$")
-	local _templates_dir = _plugin_lua_dir .. "/templates"
-	local _real_tpl_dir = vim.fn.resolve(_templates_dir)
-
-	for _, file in ipairs(vim.fn.glob(_templates_dir .. "/**/*.lua", false, true)) do
-		-- Guard: only load files that are strictly inside our templates directory
-		local real_file = vim.fn.resolve(file)
-		if real_file:sub(1, #_real_tpl_dir + 1) == _real_tpl_dir .. "/" then
-			local chunk, err = loadfile(real_file)
-			if chunk then
-				local ok_chunk, res = pcall(chunk)
-				if ok_chunk and type(res) == "function" then
-					table.insert(templates, res)
-				end
-			else
-				notify("Failed to load template " .. real_file .. ": " .. tostring(err), vim.log.levels.WARN)
-			end
-		end
 	end
 
 	local function hex(v)
