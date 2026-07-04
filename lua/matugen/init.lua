@@ -104,7 +104,11 @@ local function _apply_highlights(w, path, on_done)
 	-- matugen_status intentionally not written to vim.g to avoid
 	-- leaking the palette path to other plugins via global state
 	if on_done then
+		M._cached_w = w
+		M._cached_path = path
 		on_done()
+		M._cached_w = nil
+		M._cached_path = nil
 	end
 end
 
@@ -115,13 +119,13 @@ local function _strip_jsonc(raw)
 		:gsub("([%s,:{%[%]}])%s*//[^\n]*", "%1")
 end
 
-local _in_load_theme = false
-
 function M.load(on_done, force_sync)
-	if _in_load_theme then
-		if on_done then
-			on_done()
-		end
+	if M._cached_w then
+		local w = M._cached_w
+		local path = M._cached_path
+		M._cached_w = nil
+		M._cached_path = nil
+		_apply_highlights(w, path, on_done)
 		return
 	end
 
@@ -248,10 +252,8 @@ function M.load_theme(force_sync)
 	end
 	-- Pass vim.cmd.colorscheme as on_done so it runs after highlights
 	-- are applied by the _apply_highlights callback.
-	_in_load_theme = true
 	M.load(function()
 		vim.cmd.colorscheme("matugen")
-		_in_load_theme = false
 	end, force_sync)
 end
 
