@@ -35,13 +35,27 @@ function M.load()
 		vim.api.nvim_set_hl(0, g, o)
 	end
 
-	-- Use namespaced template path
-	for _, file in ipairs(vim.api.nvim_get_runtime_file("lua/matugen/templates/**/*.lua", true)) do
-		local mod = file:match("lua/(matugen/templates/.*)%.lua$"):gsub("/", ".")
-		package.loaded[mod] = nil
-		local res = require(mod)
-		if type(res) == "function" then
-			table.insert(templates, res)
+	-- Pin template loading to this plugin's own directory.
+	-- Using debug.getinfo + loadfile instead of nvim_get_runtime_file + require
+	-- prevents rogue plugins from injecting files via runtimepath.
+	local _self = debug.getinfo(1, "S").source:sub(2) -- strip leading "@"
+	local _plugin_lua_dir = _self:match("^(.*)/init%.lua$")
+	local _templates_dir = _plugin_lua_dir .. "/templates"
+	local _real_tpl_dir = vim.fn.resolve(_templates_dir)
+
+	for _, file in ipairs(vim.fn.glob(_templates_dir .. "/**/*.lua", false, true)) do
+		-- Guard: only load files that are strictly inside our templates directory
+		local real_file = vim.fn.resolve(file)
+		if real_file:sub(1, #_real_tpl_dir + 1) == _real_tpl_dir .. "/" then
+			local chunk, err = loadfile(real_file)
+			if chunk then
+				local ok_chunk, res = pcall(chunk)
+				if ok_chunk and type(res) == "function" then
+					table.insert(templates, res)
+				end
+			else
+				notify("Failed to load template " .. real_file .. ": " .. tostring(err), vim.log.levels.WARN)
+			end
 		end
 	end
 
