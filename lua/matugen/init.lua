@@ -19,7 +19,13 @@ function M.load()
 		if not f then
 			notify("Could not open color file at: " .. path .. "\nUsing fallback color scheme", vim.log.levels.WARN)
 		else
-			local raw = f:read("*a"):gsub("/%*.-%*/", ""):gsub("([^:])//[^\n]*", "%1")
+			-- Strip JSONC comments safely:
+			--   /* ... */ block comments (non-greedy, across lines)
+			--   // line comments only after structural JSON chars or pure whitespace,
+			--   never inside string values (avoids clobbering URLs like "https://...").
+			local raw = f:read("*a")
+				:gsub("/%*.-%*/", "")
+				:gsub("([%s,:{%[%]}])%s*//[^\n]*", "%1")
 			f:close()
 
 			local ok, data = pcall(vim.json.decode, raw)
