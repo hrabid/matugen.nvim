@@ -8,6 +8,7 @@ CONTENTS					*matugen-contents*
 2. Configuration			|matugen-config|
 3. Commands				|matugen-commands|
 4. Signal Support			|matugen-signals|
+5. Health Check				|matugen-health|
 
 ==============================================================================
 1. Introduction					*matugen-intro*
@@ -57,4 +58,15 @@ Example usage:
 pkill -SIGUSR1 nvim
 <
 ==============================================================================
+5. Health Check					*matugen-health*
+
+You can verify the status and configuration of matugen.nvim by running:
+>vim
+:checkhealth matugen
+<
+This command checks Neovim compatibility, verifies the existence and parsing
+of the generated JSONC palette file, and displays the status of active
+templates and loading states.
+==============================================================================
 vim:tw=78:ts=8:ft=help:norl:
+
