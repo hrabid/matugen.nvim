@@ -1,1 +1,1 @@
-require("matugen").load()
+require("matugen").load(nil, true)

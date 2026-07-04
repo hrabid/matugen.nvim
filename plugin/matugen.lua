@@ -1,7 +1,7 @@
 local matugen = require("matugen")
 
 vim.api.nvim_create_user_command("MatugenReload", function()
-	matugen.load_theme()
+	matugen.load_theme(true)
 	vim.notify("matugen: theme reloaded")
 end, {})
 
@@ -17,7 +17,7 @@ signal:start(
 			return
 		end
 		_last_signal_ns = now
-		matugen.load_theme()
+		matugen.load_theme(false)
 		vim.notify("matugen: theme reloaded")
 	end)
 )

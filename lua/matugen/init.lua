@@ -115,17 +115,58 @@ local function _strip_jsonc(raw)
 		:gsub("([%s,:{%[%]}])%s*//[^\n]*", "%1")
 end
 
-function M.load(on_done)
+local _in_load_theme = false
+
+function M.load(on_done, force_sync)
+	if _in_load_theme then
+		if on_done then
+			on_done()
+		end
+		return
+	end
+
 	local path = vim.fn.expand(M.opts.jsonc_path)
 
 	if not path or path == "" then
 		notify("No JSONC path configured. Using fallback color scheme", vim.log.levels.WARN)
-		vim.schedule(function()
+		if force_sync then
 			_apply_highlights({}, path, on_done)
-		end)
+		else
+			vim.schedule(function()
+				_apply_highlights({}, path, on_done)
+			end)
+		end
 		return
 	elseif not path:match("%.[Jj][Ss][Oo][Nn][Cc]?$") then
 		notify("jsonc_path must end in .json or .jsonc — refusing to open: " .. path, vim.log.levels.ERROR)
+		return
+	end
+
+	if force_sync then
+		local f = io.open(path, "r")
+		if not f then
+			notify(
+				"Could not open color file at: " .. path .. "\nUsing fallback color scheme",
+				vim.log.levels.WARN
+			)
+			_apply_highlights({}, path, on_done)
+			return
+		end
+
+		local raw = _strip_jsonc(f:read("*a"))
+		f:close()
+
+		local ok, parsed = pcall(vim.json.decode, raw)
+		local w = {}
+		if not ok or not parsed or not parsed["workbench.colorCustomizations"] then
+			notify(
+				"Failed to parse JSONC from " .. path .. "\nUsing fallback color scheme",
+				vim.log.levels.WARN
+			)
+		else
+			w = parsed["workbench.colorCustomizations"]
+		end
+		_apply_highlights(w, path, on_done)
 		return
 	end
 
@@ -195,18 +236,23 @@ function M.setup(opts)
 		load_theme = true,
 	}, opts or {})
 	if M.opts.load_theme then
-		M.load_theme()
+		M.load_theme(true) -- Force synchronous load at startup
 	else
 		notify("load_theme disabled; theme not loaded", vim.log.levels.WARN)
 	end
 end
 
-function M.load_theme()
+function M.load_theme(force_sync)
+	if force_sync == nil then
+		force_sync = true
+	end
 	-- Pass vim.cmd.colorscheme as on_done so it runs after highlights
-	-- are applied by the async _apply_highlights callback.
+	-- are applied by the _apply_highlights callback.
+	_in_load_theme = true
 	M.load(function()
 		vim.cmd.colorscheme("matugen")
-	end)
+		_in_load_theme = false
+	end, force_sync)
 end
 
 return M
