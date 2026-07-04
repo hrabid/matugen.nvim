@@ -50,37 +50,10 @@ function M.reload_templates()
 	M._templates = nil
 end
 
-function M.load()
-	local path = vim.fn.expand(M.opts.jsonc_path)
-	local w = {}
-
-	if not path or path == "" then
-		notify("No JSONC path configured. Using fallback color scheme", vim.log.levels.WARN)
-	elseif not path:match("%.[Jj][Ss][Oo][Nn][Cc]?$") then
-		notify("jsonc_path must end in .json or .jsonc — refusing to open: " .. path, vim.log.levels.ERROR)
-	else
-		local f = io.open(path, "r")
-		if not f then
-			notify("Could not open color file at: " .. path .. "\nUsing fallback color scheme", vim.log.levels.WARN)
-		else
-			-- Strip JSONC comments safely:
-			--   /* ... */ block comments (non-greedy, across lines)
-			--   // line comments only after structural JSON chars or pure whitespace,
-			--   never inside string values (avoids clobbering URLs like "https://...").
-			local raw = f:read("*a")
-				:gsub("/%*.-%*/", "")
-				:gsub("([%s,:{%[%]}])%s*//[^\n]*", "%1")
-			f:close()
-
-			local ok, data = pcall(vim.json.decode, raw)
-			if not ok or not data or not data["workbench.colorCustomizations"] then
-				notify("Failed to parse JSONC from " .. path .. "\nUsing fallback color scheme", vim.log.levels.WARN)
-			else
-				w = data["workbench.colorCustomizations"]
-			end
-		end
-	end
-
+-- Apply palette colors and highlight groups. Always called from the
+-- main thread (either directly or via vim.schedule).
+-- on_done: optional function called after highlights are applied.
+local function _apply_highlights(w, path, on_done)
 	local templates = _load_templates()
 	local hl = function(g, o)
 		vim.api.nvim_set_hl(0, g, o)
@@ -115,6 +88,90 @@ function M.load()
 	vim.g.matugen_template_count = M._template_count
 	-- matugen_status intentionally not written to vim.g to avoid
 	-- leaking the palette path to other plugins via global state
+	if on_done then
+		on_done()
+	end
+end
+
+-- Parse raw JSONC text and strip comments.
+local function _strip_jsonc(raw)
+	return raw
+		:gsub("/%*.-%*/", "")
+		:gsub("([%s,:{%[%]}])%s*//[^\n]*", "%1")
+end
+
+function M.load(on_done)
+	local path = vim.fn.expand(M.opts.jsonc_path)
+
+	if not path or path == "" then
+		notify("No JSONC path configured. Using fallback color scheme", vim.log.levels.WARN)
+		vim.schedule(function()
+			_apply_highlights({}, path, on_done)
+		end)
+		return
+	elseif not path:match("%.[Jj][Ss][Oo][Nn][Cc]?$") then
+		notify("jsonc_path must end in .json or .jsonc — refusing to open: " .. path, vim.log.levels.ERROR)
+		return
+	end
+
+	-- Non-blocking read via vim.uv so the main loop is not stalled.
+	-- Highlight application is deferred to vim.schedule() which runs on
+	-- the main thread after the async callbacks complete.
+	local uv = vim.uv or vim.loop
+	uv.fs_open(path, "r", 438, function(err_open, fd)
+		if err_open or not fd then
+			vim.schedule(function()
+				notify(
+					"Could not open color file at: " .. path .. "\nUsing fallback color scheme",
+					vim.log.levels.WARN
+				)
+				_apply_highlights({}, path, on_done)
+			end)
+			return
+		end
+
+		uv.fs_fstat(fd, function(err_stat, stat)
+			if err_stat or not stat then
+				uv.fs_close(fd, function() end)
+				vim.schedule(function()
+					notify("Could not stat color file at: " .. path, vim.log.levels.WARN)
+					_apply_highlights({}, path, on_done)
+				end)
+				return
+			end
+
+			uv.fs_read(fd, stat.size, 0, function(err_read, data)
+				uv.fs_close(fd, function() end)
+				vim.schedule(function()
+					if err_read or not data then
+						notify(
+							"Could not read color file at: " .. path .. "\nUsing fallback color scheme",
+							vim.log.levels.WARN
+						)
+						_apply_highlights({}, path, on_done)
+						return
+					end
+
+					-- Strip JSONC comments safely:
+					--   /* ... */ block comments (non-greedy, across lines)
+					--   // line comments only after structural JSON chars or
+					--   pure whitespace, never inside string values.
+					local raw = _strip_jsonc(data)
+					local ok, parsed = pcall(vim.json.decode, raw)
+					local w = {}
+					if not ok or not parsed or not parsed["workbench.colorCustomizations"] then
+						notify(
+							"Failed to parse JSONC from " .. path .. "\nUsing fallback color scheme",
+							vim.log.levels.WARN
+						)
+					else
+						w = parsed["workbench.colorCustomizations"]
+					end
+					_apply_highlights(w, path, on_done)
+				end)
+			end)
+		end)
+	end)
 end
 
 function M.setup(opts)
@@ -130,8 +187,11 @@ function M.setup(opts)
 end
 
 function M.load_theme()
-	M.load()
-	vim.cmd.colorscheme("matugen")
+	-- Pass vim.cmd.colorscheme as on_done so it runs after highlights
+	-- are applied by the async _apply_highlights callback.
+	M.load(function()
+		vim.cmd.colorscheme("matugen")
+	end)
 end
 
 return M
