@@ -80,7 +80,7 @@ Or from inside Neovim:
 :MatugenReload
 ```
 
-## Plugin status checking
+## Plugin health checking
 
 To check the current configuration, parsing correctness, active templates, and loaded status, run:
 
