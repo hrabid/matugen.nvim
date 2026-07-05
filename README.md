@@ -82,15 +82,7 @@ Or from inside Neovim:
 
 ## Plugin status checking
 
-You can query the current status of matugen with the command:
-
-```vim
-:MatugenStatus
-```
-
-This will display information such as whether the palette is loaded, the last time the theme was reload, and the current jsonc color palate file.
-
-For more detailed diagnostic checks (e.g., verifying file paths, parsing correctness, and CLI presence), run:
+To check the current configuration, parsing correctness, active templates, and loaded status, run:
 
 ```vim
 :checkhealth matugen
