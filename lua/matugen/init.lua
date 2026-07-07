@@ -119,6 +119,15 @@ local function _strip_jsonc(raw)
 		:gsub("([%s,:{%[%]}])%s*//[^\n]*", "%1")
 end
 
+-- Strip JSONC comments only when the file has a .jsonc extension;
+-- plain .json files are returned as-is.
+local function _prepare_json(data, filepath)
+	if filepath:match("%.[Jj][Ss][Oo][Nn][Cc]$") then
+		return _strip_jsonc(data)
+	end
+	return data
+end
+
 function M.load(on_done, force_sync)
 	if M._cached_w then
 		local w = M._cached_w
@@ -129,10 +138,10 @@ function M.load(on_done, force_sync)
 		return
 	end
 
-	local path = vim.fn.expand(M.opts.jsonc_path)
+	local path = vim.fn.expand(M.opts.palette_path)
 
 	if not path or path == "" then
-		notify("No JSONC path configured. Using fallback color scheme", vim.log.levels.WARN)
+		notify("No palette_path configured. Using fallback color scheme", vim.log.levels.WARN)
 		if force_sync then
 			_apply_highlights({}, path, on_done)
 		else
@@ -142,7 +151,7 @@ function M.load(on_done, force_sync)
 		end
 		return
 	elseif not path:match("%.[Jj][Ss][Oo][Nn][Cc]?$") then
-		notify("jsonc_path must end in .json or .jsonc — refusing to open: " .. path, vim.log.levels.ERROR)
+		notify("palette_path must end in .json or .jsonc — refusing to open: " .. path, vim.log.levels.ERROR)
 		return
 	end
 
@@ -157,7 +166,7 @@ function M.load(on_done, force_sync)
 			return
 		end
 
-		local raw = _strip_jsonc(f:read("*a"))
+		local raw = _prepare_json(f:read("*a"), path)
 		f:close()
 
 		local ok, parsed = pcall(vim.json.decode, raw)
@@ -216,7 +225,7 @@ function M.load(on_done, force_sync)
 					--   /* ... */ block comments (non-greedy, across lines)
 					--   // line comments only after structural JSON chars or
 					--   pure whitespace, never inside string values.
-					local raw = _strip_jsonc(data)
+					local raw = _prepare_json(data, path)
 					local ok, parsed = pcall(vim.json.decode, raw)
 					local w = {}
 					if not ok or not parsed or not parsed["workbench.colorCustomizations"] then
@@ -236,7 +245,7 @@ end
 
 function M.setup(opts)
 	M.opts = vim.tbl_deep_extend("force", {
-		jsonc_path = "",
+		palette_path = "",
 		load_theme = true,
 	}, opts or {})
 	if M.opts.load_theme then

@@ -26,18 +26,18 @@ function M.check()
 		health.warn("matugen setup() has not been called yet. Using default configurations.", {
 			"Call require('matugen').setup({ ... }) in your Neovim configuration.",
 		})
-		opts = { jsonc_path = "" }
+		opts = { palette_path = "" }
 	end
 
-	local jsonc_path = opts.jsonc_path
-	if not jsonc_path or jsonc_path == "" then
-		health.warn("jsonc_path is not configured. Falling back to the built-in theme.", {
-			"Set `jsonc_path` in your `opts` configuration.",
+	local palette_path = opts.palette_path
+	if not palette_path or palette_path == "" then
+		health.warn("palette_path is not configured. Falling back to the built-in theme.", {
+			"Set `palette_path` in your `opts` configuration.",
 		})
 	else
-		local expanded_path = vim.fn.expand(jsonc_path)
+		local expanded_path = vim.fn.expand(palette_path)
 		if vim.fn.filereadable(expanded_path) == 1 then
-			health.ok("Palette file is readable: " .. jsonc_path)
+			health.ok("Palette file is readable: " .. palette_path)
 
 			-- Try parsing the file
 			local f = io.open(expanded_path, "r")
@@ -45,13 +45,13 @@ function M.check()
 				local content = f:read("*a")
 				f:close()
 
-				-- Clean and decode JSONC
+				-- Strip JSONC comments only for .jsonc files
 				local function strip_jsonc(raw)
 					return raw
 						:gsub("/%*.-%*/", "")
 						:gsub("([%s,:{%[%]}])%s*//[^\n]*", "%1")
 				end
-				local cleaned = strip_jsonc(content)
+				local cleaned = expanded_path:match("%.[Jj][Ss][Oo][Nn][Cc]$") and strip_jsonc(content) or content
 				local ok, parsed = pcall(vim.json.decode, cleaned)
 				if ok and parsed then
 					if parsed["workbench.colorCustomizations"] then
@@ -62,16 +62,16 @@ function M.check()
 						})
 					end
 				else
-					health.error("Failed to decode JSONC from palette file at: " .. jsonc_path, {
-						"Check for syntax errors in " .. jsonc_path,
+					health.error("Failed to decode JSON from palette file at: " .. palette_path, {
+						"Check for syntax errors in " .. palette_path,
 					})
 				end
 			else
-				health.error("Could not open color file even though filereadable returned true: " .. jsonc_path)
+				health.error("Could not open color file even though filereadable returned true: " .. palette_path)
 			end
 		else
-			health.error("Palette file not found or not readable: " .. jsonc_path, {
-				"Check that your matugen output path matches: " .. jsonc_path,
+			health.error("Palette file not found or not readable: " .. palette_path, {
+				"Check that your matugen output path matches: " .. palette_path,
 				"Verify your matugen config.toml contains the correct output template path.",
 			})
 		end
