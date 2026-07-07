@@ -1,15 +1,13 @@
+--- @type table<string, any>
 local M = {}
 
--- opts will be provided via setup(opts)
-
+--- @param msg string
+--- @param lvl? integer
 local function notify(msg, lvl)
 	vim.notify("matugen: " .. msg, lvl or vim.log.levels.INFO)
 end
 
--- Load template functions from disk and cache them in M._templates.
--- Templates are Lua files that never change at runtime, so we only
--- pay the glob + loadfile cost once. Call M.reload_templates() to
--- force a refresh (e.g. after adding a new template file).
+--- @return fun(table, fun(string, table):nil)[]
 local function _load_templates()
 	if M._templates then
 		return M._templates
@@ -44,8 +42,6 @@ local function _load_templates()
 	return templates
 end
 
--- Force-reload templates from disk on the next M.load() call.
--- Useful when template files have been added or removed at runtime.
 function M.reload_templates()
 	M._templates = nil
 end
@@ -53,6 +49,8 @@ end
 -- Apply palette colors and highlight groups. Always called from the
 -- main thread (either directly or via vim.schedule).
 -- on_done: optional function called after highlights are applied.
+--- @param v string
+--- @return string?
 local function hex(v)
 	if not v then
 		return nil
@@ -114,6 +112,8 @@ end
 
 local jsonc = require("matugen.jsonc")
 
+--- @param on_done? fun()
+--- @param force_sync? boolean
 function M.load(on_done, force_sync)
 	if M._cached_w then
 		local w = M._cached_w
@@ -229,6 +229,7 @@ function M.load(on_done, force_sync)
 	end)
 end
 
+--- @param opts? {palette_path?: string, load_theme?: boolean}
 function M.setup(opts)
 	M.opts = vim.tbl_deep_extend("force", {
 		palette_path = "",
@@ -241,6 +242,7 @@ function M.setup(opts)
 	end
 end
 
+--- @param force_sync? boolean
 function M.load_theme(force_sync)
 	if force_sync == nil then
 		force_sync = true
