@@ -112,21 +112,7 @@ local function _apply_highlights(w, path, on_done)
 	end
 end
 
--- Parse raw JSONC text and strip comments.
-local function _strip_jsonc(raw)
-	return raw
-		:gsub("/%*.-%*/", "")
-		:gsub("([%s,:{%[%]}])%s*//[^\n]*", "%1")
-end
-
--- Strip JSONC comments only when the file has a .jsonc extension;
--- plain .json files are returned as-is.
-local function _prepare_json(data, filepath)
-	if filepath:match("%.[Jj][Ss][Oo][Nn][Cc]$") then
-		return _strip_jsonc(data)
-	end
-	return data
-end
+local jsonc = require("matugen.jsonc")
 
 function M.load(on_done, force_sync)
 	if M._cached_w then
@@ -166,7 +152,7 @@ function M.load(on_done, force_sync)
 			return
 		end
 
-		local raw = _prepare_json(f:read("*a"), path)
+		local raw = jsonc.prepare_json(f:read("*a"), path)
 		f:close()
 
 		local ok, parsed = pcall(vim.json.decode, raw)
@@ -225,7 +211,7 @@ function M.load(on_done, force_sync)
 					--   /* ... */ block comments (non-greedy, across lines)
 					--   // line comments only after structural JSON chars or
 					--   pure whitespace, never inside string values.
-					local raw = _prepare_json(data, path)
+					local raw = jsonc.prepare_json(data, path)
 					local ok, parsed = pcall(vim.json.decode, raw)
 					local w = {}
 					if not ok or not parsed or not parsed["workbench.colorCustomizations"] then

@@ -45,13 +45,9 @@ function M.check()
 				local content = f:read("*a")
 				f:close()
 
-				-- Strip JSONC comments only for .jsonc files
-				local function strip_jsonc(raw)
-					return raw
-						:gsub("/%*.-%*/", "")
-						:gsub("([%s,:{%[%]}])%s*//[^\n]*", "%1")
-				end
-				local cleaned = expanded_path:match("%.[Jj][Ss][Oo][Nn][Cc]$") and strip_jsonc(content) or content
+				local cleaned = expanded_path:match("%.[Jj][Ss][Oo][Nn][Cc]$")
+					and require("matugen.jsonc").strip_jsonc(content)
+				or content
 				local ok, parsed = pcall(vim.json.decode, cleaned)
 				if ok and parsed then
 					if parsed["workbench.colorCustomizations"] then
