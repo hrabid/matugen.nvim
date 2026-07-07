@@ -6,6 +6,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- **`:MatugenReload` no longer re-reads static template files from disk.**
+  Templates are cached at startup; the command now only re-reads the palette
+  JSON and re-applies highlights. Added `:MatugenReloadTemplates` for the rare
+  case of manually editing template files.
+- **JSONC line comments at byte 0 of a file are now correctly stripped.**
+  The pattern `^%s*//[^\n]*` was missing, causing files starting with `//` to
+  fail parsing.
+
+### Changed
+
+- Extracted the JSONC comment stripper into `lua/matugen/jsonc.lua` — shared
+  by `init.lua` and `health.lua` instead of maintaining two copies.
+- Hoisted the `hex()` color normalizer from inside `_apply_highlights` to
+  module level to avoid re-creating the closure on every highlight pass.
+- Added `---@param` / `---@return` type annotations to the public API for
+  better LuaLS diagnostics.
+- Enhanced `.luarc.json` with `LuaJIT` runtime, schema reference, and
+  third-party check config. Removed `.luarc.json` and `cspell.json` from
+  `.gitignore` so project config is tracked.
+
 ### ⚠ BREAKING CHANGES
 
 - **`jsonc_path` has been renamed to `palette_path`.**
