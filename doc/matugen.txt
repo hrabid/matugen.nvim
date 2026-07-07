@@ -40,10 +40,9 @@ Example configuration with lazy.nvim:
 3. Commands					*matugen-commands*
 
 *:MatugenReload*
-	Reloads the theme from the currently configured `palette_path`. This
-	is useful if you have modified your colors externally. This also
-	clears the template cache, forcing Neovim to re-read and compile
-	templates from the filesystem.
+	Clears the template cache, re-reads all template files from disk,
+	and reloads the theme from the currently configured `palette_path`.
+	Use this after modifying template files or the palette file.
 
 ==============================================================================
 4. Signal Support				*matugen-signals*

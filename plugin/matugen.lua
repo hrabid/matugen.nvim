@@ -1,15 +1,10 @@
 local matugen = require("matugen")
 
 vim.api.nvim_create_user_command("MatugenReload", function()
-	matugen.load_theme(true)
-	vim.notify("matugen: theme reloaded")
-end, {})
-
-vim.api.nvim_create_user_command("MatugenReloadTemplates", function()
 	matugen.reload_templates()
 	matugen.load_theme(true)
-	vim.notify("matugen: templates and theme reloaded")
-end, { desc = "Force re-read template files from disk" })
+	vim.notify("matugen: theme and templates reloaded")
+end, { desc = "Reload templates from disk and reapply the theme" })
 
 local _last_signal_ns = 0
 local _debounce_ns = 300 * 1e6 -- 300 ms in nanoseconds
