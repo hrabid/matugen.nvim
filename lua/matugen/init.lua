@@ -61,7 +61,7 @@ local function hex(v)
 	local len = #v
 	if len == 9 then
 		return v:sub(1, 7)
-	elseif len == 5 or len == 4 then
+	elseif len == 4 then
 		local r, g, b = v:sub(2, 2), v:sub(3, 3), v:sub(4, 4)
 		return "#" .. r .. r .. g .. g .. b .. b
 	end
