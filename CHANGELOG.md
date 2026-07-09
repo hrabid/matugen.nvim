@@ -14,16 +14,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- **Merged `:MatugenReload` and `:MatugenReloadTemplates` into a single `:MatugenReload` command.** It now clears the template cache and re-reads template files from disk on every invocation.
 - Extracted the JSONC comment stripper into `lua/matugen/jsonc.lua` — shared
   by `init.lua` and `health.lua` instead of maintaining two copies.
 - Hoisted the `hex()` color normalizer from inside `_apply_highlights` to
   module level to avoid re-creating the closure on every highlight pass.
 - Added `---@param` / `---@return` type annotations to the public API for
   better LuaLS diagnostics.
-- Enhanced `.luarc.json` with `LuaJIT` runtime, schema reference, and
-  third-party check config. Removed `.luarc.json` and `cspell.json` from
-  `.gitignore` so project config is tracked.
 
 ### ⚠ BREAKING CHANGES
 
