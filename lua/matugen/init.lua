@@ -134,8 +134,7 @@ local function _apply_highlights(w, path, on_done)
 	M._template_count = #templates
 	M._status = "Loaded successfully"
 	M._palette_path = vim.fn.fnamemodify(path, ":~")
-	vim.g.matugen_last_reload = now
-	vim.g.matugen_template_count = M._template_count
+
 	-- matugen_status intentionally not written to vim.g to avoid
 	-- leaking the palette path to other plugins via global state
 	if on_done then
