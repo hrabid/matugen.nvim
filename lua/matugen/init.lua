@@ -22,18 +22,20 @@ local function _load_templates()
 	local _templates_dir = _plugin_lua_dir .. "/templates"
 	local _real_tpl_dir = vim.fn.resolve(_templates_dir)
 
-	for _, file in ipairs(vim.fn.glob(_templates_dir .. "/**/*.lua", false, true)) do
-		-- Guard: only load files that are strictly inside our templates directory
-		local real_file = vim.fn.resolve(file)
-		if real_file:sub(1, #_real_tpl_dir + 1) == _real_tpl_dir .. "/" then
-			local chunk, err = loadfile(real_file)
-			if chunk then
-				local ok_chunk, res = pcall(chunk)
-				if ok_chunk and type(res) == "function" then
-					table.insert(templates, res)
+	for name, type in vim.fs.dir(_templates_dir) do
+		if type == "file" and name:match("%.lua$") then
+			local file = _templates_dir .. "/" .. name
+			local real_file = vim.fn.resolve(file)
+			if real_file:sub(1, #_real_tpl_dir + 1) == _real_tpl_dir .. "/" then
+				local chunk, err = loadfile(real_file)
+				if chunk then
+					local ok_chunk, res = pcall(chunk)
+					if ok_chunk and type(res) == "function" then
+						table.insert(templates, res)
+					end
+				else
+					notify("Failed to load template " .. real_file .. ": " .. tostring(err), vim.log.levels.WARN)
 				end
-			else
-				notify("Failed to load template " .. real_file .. ": " .. tostring(err), vim.log.levels.WARN)
 			end
 		end
 	end
@@ -93,8 +95,18 @@ end
 local function _apply_highlights(w, path, on_done)
 	local templates = _load_templates()
 	local nvim_set_hl = vim.api.nvim_set_hl
-	local hl = function(g, o)
-		nvim_set_hl(0, g, o)
+	local hl
+	if _initial_load then
+		hl = function(g, o)
+			nvim_set_hl(0, g, o)
+		end
+		_initial_load = false
+	else
+		hl = function(g, o)
+			if vim.fn.hlID(g) ~= 0 then
+				nvim_set_hl(0, g, o)
+			end
+		end
 	end
 
 	local validator = _load_validator()
@@ -152,6 +164,7 @@ local function _apply_highlights(w, path, on_done)
 end
 
 local jsonc = require("matugen.jsonc")
+local _initial_load = true
 
 --- @param on_done? fun()
 --- @param force_sync? boolean
@@ -277,7 +290,7 @@ function M.setup(opts)
 		load_theme = true,
 	}, opts or {})
 	if M.opts.load_theme then
-		M.load_theme(true) -- Force synchronous load at startup
+		M.load_theme(false) -- Non-blocking async load at startup
 	else
 		notify("load_theme disabled; theme not loaded", vim.log.levels.WARN)
 	end
