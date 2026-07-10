@@ -14,28 +14,24 @@ local function _load_templates()
 	end
 
 	local templates = {}
-	-- Pin template loading to this plugin's own directory.
-	-- Using debug.getinfo + loadfile instead of nvim_get_runtime_file + require
-	-- prevents rogue plugins from injecting files via runtimepath.
-	local _self = debug.getinfo(1, "S").source:sub(2) -- strip leading "@"
+	-- Pin template loading to this plugin's own directory via its resolved
+	-- path, preventing rogue plugins from injecting files via runtimepath.
+	local _self = debug.getinfo(1, "S").source:sub(2)
 	local _plugin_lua_dir = _self:match("^(.*)/init%.lua$")
 	local _templates_dir = _plugin_lua_dir .. "/templates"
 	local _real_tpl_dir = vim.fn.resolve(_templates_dir)
 
-	for name, ftype in vim.fs.dir(_templates_dir) do
+	for name, ftype in vim.fs.dir(_real_tpl_dir) do
 		if ftype == "file" and name:match("%.lua$") then
-			local file = _templates_dir .. "/" .. name
-			local real_file = vim.fn.resolve(file)
-			if real_file:sub(1, #_real_tpl_dir + 1) == _real_tpl_dir .. "/" then
-				local chunk, err = loadfile(real_file)
-				if chunk then
-					local ok_chunk, res = pcall(chunk)
-					if ok_chunk and type(res) == "function" then
-						table.insert(templates, res)
-					end
-				else
-					notify("Failed to load template " .. real_file .. ": " .. tostring(err), vim.log.levels.WARN)
+			local file = _real_tpl_dir .. "/" .. name
+			local chunk, err = loadfile(file)
+			if chunk then
+				local ok_chunk, res = pcall(chunk)
+				if ok_chunk and type(res) == "function" then
+					table.insert(templates, res)
 				end
+			else
+				notify("Failed to load template " .. file .. ": " .. tostring(err), vim.log.levels.WARN)
 			end
 		end
 	end
