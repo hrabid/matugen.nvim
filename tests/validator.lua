@@ -80,4 +80,17 @@ function M.is_valid_hex(color)
 	return is_valid_hex(color)
 end
 
+--- Validate resolved color values (after hex() processing).
+--- Only #-prefixed values are checked; non-hex values pass through.
+--- @param colors table<string, string>
+--- @return boolean
+function M.validate_colors(colors)
+	for _, value in pairs(colors) do
+		if type(value) == "string" and value:sub(1, 1) == "#" and not is_valid_hex(value) then
+			return false
+		end
+	end
+	return true
+end
+
 return M

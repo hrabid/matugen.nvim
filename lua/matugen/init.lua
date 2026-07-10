@@ -68,6 +68,25 @@ local function hex(v)
 	return v
 end
 
+local _validator
+
+local function _load_validator()
+	if _validator then
+		return _validator
+	end
+	local src = debug.getinfo(1, "S").source:sub(2)
+	local root = src:match("^(.*/)lua/matugen/init%.lua$")
+	if not root then
+		return nil
+	end
+	local ok, mod = pcall(dofile, root .. "tests/validator.lua")
+	if ok and type(mod.validate_colors) == "function" then
+		_validator = mod
+		return mod
+	end
+	return nil
+end
+
 local function _apply_highlights(w, path, on_done)
 	local templates = _load_templates()
 	local nvim_set_hl = vim.api.nvim_set_hl
@@ -82,6 +101,11 @@ local function _apply_highlights(w, path, on_done)
 
 	if not c then
 		return notify("palette not found", 3)
+	end
+
+	local validator = _load_validator()
+	if validator and not validator.validate_colors(c) then
+		return notify("palette contains invalid color values", 3)
 	end
 
 	vim.cmd("highlight clear")
