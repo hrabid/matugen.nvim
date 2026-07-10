@@ -97,28 +97,28 @@ local function _apply_highlights(w, path, on_done)
 		nvim_set_hl(0, g, o)
 	end
 
-	local palette = require("matugen.palette")
-	local fallback_palette = require("matugen.fallback_palette")
-	local c = palette.get_colors(function(k)
-		return hex(w[k])
-	end)
-
-	if not c then
-		return notify("palette not found", 3)
-	end
-
-	for k, v in pairs(fallback_palette) do
-		if c[k] == nil then
-			c[k] = v
-		end
-	end
-
 	local validator = _load_validator()
-	if validator and not validator.validate_colors(c) then
+	local fallback_palette = require("matugen.fallback_palette")
+	local c
+
+	if validator and w and next(w) ~= nil and not validator.validate_colors(w) then
 		notify("palette contains invalid color values, using fallback", vim.log.levels.WARN)
 		c = {}
 		for k, v in pairs(fallback_palette) do
 			c[k] = v
+		end
+	else
+		local palette = require("matugen.palette")
+		c = palette.get_colors(function(k)
+			return hex(w[k])
+		end)
+		if not c then
+			return notify("palette not found", 3)
+		end
+		for k, v in pairs(fallback_palette) do
+			if c[k] == nil then
+				c[k] = v
+			end
 		end
 	end
 
