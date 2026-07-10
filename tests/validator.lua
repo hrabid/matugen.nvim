@@ -88,13 +88,34 @@ function M.is_valid_hex(color)
 	return is_valid_hex(color)
 end
 
---- Validate resolved color values (after hex() processing).
---- Only #-prefixed values are checked; non-hex values pass through.
+--- Validate that every color value is a hex color.
+--- Every value must start with "#" and be valid hex.
 --- @param colors table<string, string>
 --- @return boolean
 function M.validate_colors(colors)
 	for _, value in pairs(colors) do
-		if type(value) == "string" and value:sub(1, 1) == "#" and not is_valid_hex(value) then
+		if type(value) ~= "string" or value:sub(1, 1) ~= "#" or not is_valid_hex(value) then
+			return false
+		end
+	end
+	return true
+end
+
+--- Full palette validation: all values valid hex + all required keys present.
+--- @param w table<string, string>
+--- @return boolean
+function M.is_valid(w)
+	if type(w) ~= "table" or next(w) == nil then
+		return false
+	end
+	for _, value in pairs(w) do
+		if type(value) ~= "string" or value:sub(1, 1) ~= "#" or not is_valid_hex(value) then
+			return false
+		end
+	end
+	local palette = require("matugen.palette")
+	for _, key in ipairs(palette.required_keys) do
+		if w[key] == nil then
 			return false
 		end
 	end

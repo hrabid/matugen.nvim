@@ -101,8 +101,8 @@ local function _apply_highlights(w, path, on_done)
 	local fallback_palette = require("matugen.fallback_palette")
 	local c
 
-	if validator and w and next(w) ~= nil and not validator.validate_colors(w) then
-		notify("palette contains invalid color values, using fallback", vim.log.levels.WARN)
+	if validator and w and next(w) ~= nil and not validator.is_valid(w) then
+		notify("palette contains invalid or incomplete color values, using fallback", vim.log.levels.WARN)
 		c = {}
 		for k, v in pairs(fallback_palette) do
 			c[k] = v
