@@ -1,10 +1,17 @@
 local fallback = require("matugen.fallback_palette")
 
+local function is_valid_hex(color)
+	if type(color) ~= "string" then
+		return false
+	end
+	return color:match("^#%x%x%x(%x%x%x)?(%x%x)?$") ~= nil
+end
+
 return {
   --- @param get fun(key: string): string?
-  --- @return table<string, string>
+  --- @return table<string, string>?
   get_colors = function(get)
-    return {
+    local colors = {
       surface = get("editor.background") or fallback.surface,
       surface_low = get("sideBar.background") or fallback.surface_low,
       surface_container = get("statusBar.background") or fallback.surface_container,
@@ -39,5 +46,13 @@ return {
       git_modified = get("editorGutter.modifiedBackground") or fallback.git_modified,
       git_deleted = get("editorGutter.deletedBackground") or fallback.git_deleted,
     }
+
+    for _, value in pairs(colors) do
+      if not is_valid_hex(value) then
+        return nil
+      end
+    end
+
+    return colors
   end,
 }
