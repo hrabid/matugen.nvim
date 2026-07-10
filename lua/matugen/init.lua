@@ -105,9 +105,6 @@ local function _apply_highlights(w, path, on_done)
 			M._invalid_warned = true
 		end
 		c = {}
-		for k, v in pairs(fallback_palette) do
-			c[k] = v
-		end
 	else
 		local palette = require("matugen.palette")
 		c = palette.get_colors(function(k)
@@ -116,10 +113,11 @@ local function _apply_highlights(w, path, on_done)
 		if not c then
 			return notify("palette not found", 3)
 		end
-		for k, v in pairs(fallback_palette) do
-			if c[k] == nil then
-				c[k] = v
-			end
+	end
+
+	for k, v in pairs(fallback_palette) do
+		if c[k] == nil then
+			c[k] = v
 		end
 	end
 
