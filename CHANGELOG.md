@@ -14,6 +14,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   back gracefully to `fallback_palette` instead of crashing.
 - **Support for `#RGBA` (4-hex-digit) color format** in the validator and
   `hex()` normalizer.
+- **Test suite.** Initial specs for setup and palette-missing error handling
+  via `PlenaryBustedDirectory` (`tests/matugen_spec.lua`,
+  `tests/minimal_init.lua`).
+- **Makefile** with a `test` target for local headless test execution.
+- **GitHub Actions CI** (`.github/workflows/tests.yml`) running tests on
+  pushes/PRs to `main`.
 
 ### Fixed
 
@@ -29,6 +35,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   now shown only once per session instead of on every signal reload.
 - **Renamed loop variable in template loader** to `ftype` to avoid shadowing
   Lua's global `type()` function.
+- **Removed spurious warning** when `load_theme` is explicitly set to `false`
+  in user config.
+- **Removed unrelated `winblend` autocmd** from `plugin/matugen.lua` that was
+  setting `winblend = 0` for non-matugen floating windows.
+- **Always re-apply all template highlights on reload** instead of the
+  incremental `hlID` guard that could miss groups removed by other plugins.
 
 ### Changed
 
@@ -47,10 +59,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   palette values.
 - **Template loading switched from `vim.fn.glob` to `vim.fs.dir`** for
   better performance.
-- **Smarter highlight application on reload.** On initial load all
-  highlights are set; on subsequent reloads only groups that already exist
-  (via `hlID` guard) are updated, reducing unnecessary `nvim_set_hl` calls.
- ### ⚠ BREAKING CHANGES
+- **Removed per-file `vim.fn.resolve` calls** by resolving the template
+  directory once, eliminating redundant symlink-escape checks on every file.
+- **Deduplicated `fallback_palette` merge** into a single post-resolution
+  step, removing duplicate merges in both palette branches.
+- **Removed unused `vim.g` writes** (`matugen_last_reload`,
+  `matugen_template_count`) that triggered unnecessary global `OptionSet`
+  autocmd events.
+- **Moved validator from `tests/` to `lua/matugen/`**, replacing the
+  `dofile`-based loading with a standard `require`.
+
+### ⚠ BREAKING CHANGES
 
 - **`jsonc_path` has been renamed to `palette_path`.**
   You must update your plugin configuration to use the new option name.
