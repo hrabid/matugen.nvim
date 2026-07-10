@@ -1,43 +1,41 @@
-local fallback = require("matugen.fallback_palette")
-
 return {
   --- @param get fun(key: string): string?
   --- @return table<string, string>
   get_colors = function(get)
     return {
-      surface = get("editor.background") or fallback.surface,
-      surface_low = get("sideBar.background") or fallback.surface_low,
-      surface_container = get("statusBar.background") or fallback.surface_container,
-      surface_high = get("sideBarSectionHeader.background") or fallback.surface_high,
-      surface_highest = get("terminal.inactiveSelectionBackground") or fallback.surface_highest,
+      surface = get("editor.background"),
+      surface_low = get("sideBar.background"),
+      surface_container = get("statusBar.background"),
+      surface_high = get("sideBarSectionHeader.background"),
+      surface_highest = get("terminal.inactiveSelectionBackground"),
 
-      on_surface = get("editor.foreground") or fallback.on_surface,
-      on_surface_variant = get("statusBar.foreground") or fallback.on_surface_variant,
-      outline = get("editorLineNumber.foreground") or fallback.outline,
-      outline_variant = get("editorWidget.border") or fallback.outline_variant,
+      on_surface = get("editor.foreground"),
+      on_surface_variant = get("statusBar.foreground"),
+      outline = get("editorLineNumber.foreground"),
+      outline_variant = get("editorWidget.border"),
 
-      primary = get("editorLineNumber.activeForeground") or fallback.primary,
-      on_primary = get("button.foreground") or fallback.on_primary,
-      primary_container = get("editorSuggestWidget.selectedBackground") or fallback.primary_container,
-      on_primary_container = get("editorSuggestWidget.selectedForeground") or fallback.on_primary_container,
+      primary = get("editorLineNumber.activeForeground"),
+      on_primary = get("button.foreground"),
+      primary_container = get("editorSuggestWidget.selectedBackground"),
+      on_primary_container = get("editorSuggestWidget.selectedForeground"),
 
-      secondary = get("editorWarning.foreground") or fallback.secondary,
-      secondary_container = get("statusBarItem.remoteBackground") or fallback.secondary_container,
-      on_secondary_container = get("statusBarItem.remoteForeground") or fallback.on_secondary_container,
+      secondary = get("editorWarning.foreground"),
+      secondary_container = get("statusBarItem.remoteBackground"),
+      on_secondary_container = get("statusBarItem.remoteForeground"),
 
-      tertiary = get("editorInfo.foreground") or fallback.tertiary,
-      tertiary_container = get("terminal.ansiBrightGreen") or fallback.tertiary_container,
+      tertiary = get("editorInfo.foreground"),
+      tertiary_container = get("terminal.ansiBrightGreen"),
 
-      error = get("editorError.foreground") or fallback.error,
-      error_container = get("terminal.ansiBrightRed") or fallback.error_container,
+      error = get("editorError.foreground"),
+      error_container = get("terminal.ansiBrightRed"),
 
-      selection_bg = get("editor.selectionBackground") or fallback.selection_bg,
-      word_highlight = get("editor.wordHighlightBackground") or fallback.word_highlight,
-      word_highlight_strong = get("editor.wordHighlightStrongBackground") or fallback.word_highlight_strong,
+      selection_bg = get("editor.selectionBackground"),
+      word_highlight = get("editor.wordHighlightBackground"),
+      word_highlight_strong = get("editor.wordHighlightStrongBackground"),
 
-      git_added = get("editorGutter.addedBackground") or fallback.git_added,
-      git_modified = get("editorGutter.modifiedBackground") or fallback.git_modified,
-      git_deleted = get("editorGutter.deletedBackground") or fallback.git_deleted,
+      git_added = get("editorGutter.addedBackground"),
+      git_modified = get("editorGutter.modifiedBackground"),
+      git_deleted = get("editorGutter.deletedBackground"),
     }
   end,
 }

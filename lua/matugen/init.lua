@@ -95,12 +95,19 @@ local function _apply_highlights(w, path, on_done)
 	end
 
 	local palette = require("matugen.palette")
+	local fallback_palette = require("matugen.fallback_palette")
 	local c = palette.get_colors(function(k)
 		return hex(w[k])
 	end)
 
 	if not c then
 		return notify("palette not found", 3)
+	end
+
+	for k, v in pairs(fallback_palette) do
+		if c[k] == nil then
+			c[k] = v
+		end
 	end
 
 	local validator = _load_validator()
