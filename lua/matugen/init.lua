@@ -69,24 +69,7 @@ local function hex(v)
 	return v
 end
 
-local _validator
-
-local function _load_validator()
-	if _validator then
-		return _validator
-	end
-	local src = debug.getinfo(1, "S").source:sub(2)
-	local root = src:match("^(.*/)lua/matugen/init%.lua$")
-	if not root then
-		return nil
-	end
-	local ok, mod = pcall(dofile, root .. "tests/validator.lua")
-	if ok and type(mod.validate_colors) == "function" then
-		_validator = mod
-		return mod
-	end
-	return nil
-end
+local validator = require("matugen.validator")
 
 local function _apply_highlights(w, path, on_done)
 	local templates = _load_templates()
@@ -95,7 +78,6 @@ local function _apply_highlights(w, path, on_done)
 		nvim_set_hl(0, g, o)
 	end
 
-	local validator = _load_validator()
 	local fallback_palette = require("matugen.fallback_palette")
 	local c
 

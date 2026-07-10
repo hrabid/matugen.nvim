@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
-- **Palette validator (`tests/validator.lua`).**
+- **Palette validator (`lua/matugen/validator.lua`).**
   Colors are now validated before loading the theme. If the palette file
   contains invalid hex values or is missing required keys, the plugin falls
   back gracefully to `fallback_palette` instead of crashing.
@@ -38,11 +38,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   module level to avoid re-creating the closure on every highlight pass.
 - Added `---@param` / `---@return` type annotations to the public API for
   better LuaLS diagnostics.
-- Moved hex validation from `palette.lua` to `tests/validator.lua`.
-- Moved required-keys list from `palette.lua` to `tests/validator.lua`.
+- Moved hex validation from `palette.lua` to `lua/matugen/validator.lua`.
+- Moved required-keys list from `palette.lua` to `lua/matugen/validator.lua`.
 - Moved fallback logic from `palette.lua` to `init.lua`.
 - Consolidated all validation into a single `is_valid()` function in
-  `validator.lua`.
+  `lua/matugen/validator.lua`.
 - `palette.lua` is now bypassed entirely when the validator rejects raw
   palette values.
 - **Template loading switched from `vim.fn.glob` to `vim.fs.dir`** for
