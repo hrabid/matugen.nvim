@@ -1,34 +1,5 @@
 local M = {}
 
-M.required_keys = {
-  "editor.background",
-  "sideBar.background",
-  "statusBar.background",
-  "sideBarSectionHeader.background",
-  "terminal.inactiveSelectionBackground",
-  "editor.foreground",
-  "statusBar.foreground",
-  "editorLineNumber.foreground",
-  "editorWidget.border",
-  "editorLineNumber.activeForeground",
-  "button.foreground",
-  "editorSuggestWidget.selectedBackground",
-  "editorSuggestWidget.selectedForeground",
-  "editorWarning.foreground",
-  "statusBarItem.remoteBackground",
-  "statusBarItem.remoteForeground",
-  "editorInfo.foreground",
-  "terminal.ansiBrightGreen",
-  "editorError.foreground",
-  "terminal.ansiBrightRed",
-  "editor.selectionBackground",
-  "editor.wordHighlightBackground",
-  "editor.wordHighlightStrongBackground",
-  "editorGutter.addedBackground",
-  "editorGutter.modifiedBackground",
-  "editorGutter.deletedBackground",
-}
-
 function M.get_colors(get)
   return {
     surface = get("editor.background"),

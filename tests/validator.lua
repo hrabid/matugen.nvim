@@ -2,6 +2,35 @@ local jsonc = require("matugen.jsonc")
 
 local M = {}
 
+M.required_keys = {
+  "editor.background",
+  "sideBar.background",
+  "statusBar.background",
+  "sideBarSectionHeader.background",
+  "terminal.inactiveSelectionBackground",
+  "editor.foreground",
+  "statusBar.foreground",
+  "editorLineNumber.foreground",
+  "editorWidget.border",
+  "editorLineNumber.activeForeground",
+  "button.foreground",
+  "editorSuggestWidget.selectedBackground",
+  "editorSuggestWidget.selectedForeground",
+  "editorWarning.foreground",
+  "statusBarItem.remoteBackground",
+  "statusBarItem.remoteForeground",
+  "editorInfo.foreground",
+  "terminal.ansiBrightGreen",
+  "editorError.foreground",
+  "terminal.ansiBrightRed",
+  "editor.selectionBackground",
+  "editor.wordHighlightBackground",
+  "editor.wordHighlightStrongBackground",
+  "editorGutter.addedBackground",
+  "editorGutter.modifiedBackground",
+  "editorGutter.deletedBackground",
+}
+
 local function is_valid_hex(color)
 	if type(color) ~= "string" then
 		return false
@@ -113,8 +142,7 @@ function M.is_valid(w)
 			return false
 		end
 	end
-	local palette = require("matugen.palette")
-	for _, key in ipairs(palette.required_keys) do
+	for _, key in ipairs(M.required_keys) do
 		if w[key] == nil then
 			return false
 		end
