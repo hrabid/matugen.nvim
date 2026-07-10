@@ -6,7 +6,7 @@ local function is_valid_hex(color)
 	if type(color) ~= "string" then
 		return false
 	end
-	return color:match("^#%x%x%x(%x%x%x)?(%x%x)?$") ~= nil
+	return color:match("^#%x%x%x(%x)?(%x%x%x)?(%x%x)?$") ~= nil
 end
 
 function M.validate(path)
