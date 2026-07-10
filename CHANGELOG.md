@@ -25,6 +25,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Non-hex color values in the palette no longer cause false validation
   failures.** Only values starting with `#` are validated as hex; other
   strings pass through.
+- **Deduplicated invalid-palette warning on cache replay.** The warning is
+  now shown only once per session instead of on every signal reload.
+- **Renamed loop variable in template loader** to `ftype` to avoid shadowing
+  Lua's global `type()` function.
 
 ### Changed
 
@@ -41,8 +45,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `validator.lua`.
 - `palette.lua` is now bypassed entirely when the validator rejects raw
   palette values.
-
-### ⚠ BREAKING CHANGES
+- **Template loading switched from `vim.fn.glob` to `vim.fs.dir`** for
+  better performance.
+- **Smarter highlight application on reload.** On initial load all
+  highlights are set; on subsequent reloads only groups that already exist
+  (via `hlID` guard) are updated, reducing unnecessary `nvim_set_hl` calls.
+ ### ⚠ BREAKING CHANGES
 
 - **`jsonc_path` has been renamed to `palette_path`.**
   You must update your plugin configuration to use the new option name.
