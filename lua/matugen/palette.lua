@@ -48,7 +48,7 @@ return {
     }
 
     for _, value in pairs(colors) do
-      if not is_valid_hex(value) then
+      if type(value) == "string" and value:sub(1, 1) == "#" and not is_valid_hex(value) then
         return nil
       end
     end

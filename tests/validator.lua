@@ -55,7 +55,12 @@ function M.validate(path)
 	end
 
 	for key, value in pairs(colors) do
-		if type(key) == "string" and type(value) == "string" and not is_valid_hex(value) then
+		if
+			type(key) == "string"
+			and type(value) == "string"
+			and value:sub(1, 1) == "#"
+			and not is_valid_hex(value)
+		then
 			result.ok = false
 			table.insert(
 				result.errors,
@@ -65,7 +70,7 @@ function M.validate(path)
 	end
 
 	if result.ok then
-		table.insert(result.warnings, "All color values in palette are valid hex colors")
+		table.insert(result.warnings, "All color values in palette are valid")
 	end
 
 	return result
