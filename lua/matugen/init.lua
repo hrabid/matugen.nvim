@@ -95,18 +95,8 @@ end
 local function _apply_highlights(w, path, on_done)
 	local templates = _load_templates()
 	local nvim_set_hl = vim.api.nvim_set_hl
-	local hl
-	if _initial_load then
-		hl = function(g, o)
-			nvim_set_hl(0, g, o)
-		end
-		_initial_load = false
-	else
-		hl = function(g, o)
-			if vim.fn.hlID(g) ~= 0 then
-				nvim_set_hl(0, g, o)
-			end
-		end
+	local hl = function(g, o)
+		nvim_set_hl(0, g, o)
 	end
 
 	local validator = _load_validator()
@@ -164,7 +154,6 @@ local function _apply_highlights(w, path, on_done)
 end
 
 local jsonc = require("matugen.jsonc")
-local _initial_load = true
 
 --- @param on_done? fun()
 --- @param force_sync? boolean

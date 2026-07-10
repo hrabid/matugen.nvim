@@ -29,3 +29,12 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.wo.winblend = 0
 	end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "mason" },
+	callback = function()
+		vim.schedule(function()
+			require("matugen").load_theme(true)
+		end)
+	end,
+})
