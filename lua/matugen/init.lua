@@ -22,8 +22,8 @@ local function _load_templates()
 	local _templates_dir = _plugin_lua_dir .. "/templates"
 	local _real_tpl_dir = vim.fn.resolve(_templates_dir)
 
-	for name, type in vim.fs.dir(_templates_dir) do
-		if type == "file" and name:match("%.lua$") then
+	for name, ftype in vim.fs.dir(_templates_dir) do
+		if ftype == "file" and name:match("%.lua$") then
 			local file = _templates_dir .. "/" .. name
 			local real_file = vim.fn.resolve(file)
 			if real_file:sub(1, #_real_tpl_dir + 1) == _real_tpl_dir .. "/" then
