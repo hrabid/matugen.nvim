@@ -112,7 +112,11 @@ local function _apply_highlights(w, path, on_done)
 
 	local validator = _load_validator()
 	if validator and not validator.validate_colors(c) then
-		return notify("palette contains invalid color values", 3)
+		notify("palette contains invalid color values, using fallback", vim.log.levels.WARN)
+		c = {}
+		for k, v in pairs(fallback_palette) do
+			c[k] = v
+		end
 	end
 
 	vim.cmd("highlight clear")
