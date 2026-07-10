@@ -102,7 +102,10 @@ local function _apply_highlights(w, path, on_done)
 	local c
 
 	if validator and w and next(w) ~= nil and not validator.is_valid(w) then
-		notify("palette contains invalid or incomplete color values, using fallback", vim.log.levels.WARN)
+		if not M._invalid_warned then
+			notify("palette contains invalid or incomplete color values, using fallback", vim.log.levels.WARN)
+			M._invalid_warned = true
+		end
 		c = {}
 		for k, v in pairs(fallback_palette) do
 			c[k] = v
