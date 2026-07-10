@@ -6,7 +6,15 @@ local function is_valid_hex(color)
 	if type(color) ~= "string" then
 		return false
 	end
-	return color:match("^#%x%x%x(%x)?(%x%x%x)?(%x%x)?$") ~= nil
+	if color:sub(1, 1) ~= "#" then
+		return false
+	end
+	local hex = color:sub(2)
+	local len = #hex
+	if len ~= 3 and len ~= 4 and len ~= 6 and len ~= 8 then
+		return false
+	end
+	return hex:match("^%x+$") ~= nil
 end
 
 function M.validate(path)
