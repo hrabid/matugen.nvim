@@ -6,11 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- **Palette validator (`tests/validator.lua`).**
+  Colors are now validated before loading the theme. If the palette file
+  contains invalid hex values or is missing required keys, the plugin falls
+  back gracefully to `fallback_palette` instead of crashing.
+- **Support for `#RGBA` (4-hex-digit) color format** in the validator and
+  `hex()` normalizer.
+
 ### Fixed
 
 - **JSONC line comments at byte 0 of a file are now correctly stripped.**
   The pattern `^%s*//[^\n]*` was missing, causing files starting with `//` to
   fail parsing.
+- **Broken regex in `is_valid_hex` replaced** with explicit length checks
+  (`#hex == 3, 4, 6, or 8`), making validation reliable.
+- **Non-hex color values in the palette no longer cause false validation
+  failures.** Only values starting with `#` are validated as hex; other
+  strings pass through.
 
 ### Changed
 
@@ -20,6 +34,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   module level to avoid re-creating the closure on every highlight pass.
 - Added `---@param` / `---@return` type annotations to the public API for
   better LuaLS diagnostics.
+- Moved hex validation from `palette.lua` to `tests/validator.lua`.
+- Moved required-keys list from `palette.lua` to `tests/validator.lua`.
+- Moved fallback logic from `palette.lua` to `init.lua`.
+- Consolidated all validation into a single `is_valid()` function in
+  `validator.lua`.
+- `palette.lua` is now bypassed entirely when the validator rejects raw
+  palette values.
 
 ### ⚠ BREAKING CHANGES
 
