@@ -274,8 +274,6 @@ function M.setup(opts)
 	}, opts or {})
 	if M.opts.load_theme then
 		M.load_theme(false) -- Non-blocking async load at startup
-	else
-		notify("load_theme disabled; theme not loaded", vim.log.levels.WARN)
 	end
 end
 
