@@ -8,7 +8,8 @@ CONTENTS					*matugen-contents*
 2. Configuration			|matugen-config|
 3. Commands				|matugen-commands|
 4. Signal Support			|matugen-signals|
-5. Health Check				|matugen-health|
+5. Lua API				|matugen-api|
+6. Health Check				|matugen-health|
 
 ==============================================================================
 1. Introduction					*matugen-intro*
@@ -57,7 +58,61 @@ Example usage:
 pkill -SIGUSR1 nvim
 <
 ==============================================================================
-5. Health Check					*matugen-health*
+5. Lua API						*matugen-api*
+
+The plugin exposes several functions from the `matugen` module for
+programmatic use in your config or autocmds.
+
+`setup(opts)`						*matugen-api-setup*
+	Initializes the plugin with the given options.
+
+	Parameters: ~
+		`opts`		(table, optional) Options table:
+				- `palette_path`	(string) Path to the matugen
+					JSON/JSONC palette file.
+				- `load_theme`		(boolean) Whether to load
+					the theme on startup. Default: true.
+
+	Example:
+	>lua
+	require("matugen").setup({
+	    palette_path = "~/.config/matugen/themes/nvim-colors.json",
+	    load_theme = true,
+	})
+<
+
+`load(on_done, force_sync)`				*matugen-api-load*
+	Reads the palette file from the configured `palette_path`, parses
+	it, maps colors to the semantic palette, and applies all highlight
+	templates. Runs asynchronously (non-blocking) by default.
+
+	Parameters: ~
+		`on_done`	(function, optional) Callback invoked after all
+				highlights are applied.
+		`force_sync`	(boolean, optional) If true, performs file I/O
+				synchronously. Used internally by the
+				colorscheme entry point.
+
+	When called without arguments, reads the palette file asynchronously
+	via libuv and defers highlight application via `vim.schedule`.
+
+`load_theme(force_sync)`				*matugen-api-load_theme*
+	Convenience wrapper around |matugen-api-load| that calls `load`
+	and then applies the `colorscheme matugen` command. This is used
+	internally by `setup` when `load_theme` is true.
+
+	Parameters: ~
+		`force_sync`	(boolean, optional) Defaults to true. Pass
+				false for an async non-blocking load.
+
+`reload_templates()`					*matugen-api-reload_templates*
+	Clears the in-memory template cache. The next call to `load` or
+	`load_theme` will re-read all template files from disk. Note that
+	this does not automatically re-apply highlights; call `load_theme`
+	afterwards to apply the newly loaded templates.
+
+==============================================================================
+6. Health Check					*matugen-health*
 
 You can verify the status and configuration of matugen.nvim by running:
 >vim
