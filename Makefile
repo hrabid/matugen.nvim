@@ -4,4 +4,4 @@ test:
 		-c "PlenaryBustedDirectory tests/"
 
 check-syntax:
-	nvim --headless --clean -l scripts/check_syntax.lua
+	nvim --headless --clean -l .github/scripts/check_syntax.lua
