@@ -1,8 +1,6 @@
 local validator = require("matugen.validator")
 
-local function test_palette_path()
-  return vim.fn.getcwd() .. "/.github/nvim-colors.json"
-end
+local test_palette_path = _G.test_palette_path
 
 describe("validator", function()
   describe("is_valid_hex", function()
@@ -113,7 +111,7 @@ describe("validator", function()
 
   describe("validate", function()
     it("passes on the test palette file", function()
-      local result = validator.validate(test_palette_path())
+      local result = validator.validate(test_palette_path)
       assert.is_true(result.ok)
       assert.are.same(0, #result.errors)
     end)

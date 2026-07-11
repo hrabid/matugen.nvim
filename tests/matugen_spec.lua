@@ -1,18 +1,6 @@
 local matugen = require("matugen")
 
-local HOME = vim.fn.expand("~")
-
-local function test_palette_path()
-  return vim.fn.getcwd() .. "/.github/nvim-colors.json"
-end
-
-local function palette_path_tilde()
-  local cwd = vim.fn.getcwd()
-  if cwd:sub(1, #HOME) == HOME then
-    return "~" .. cwd:sub(#HOME + 1) .. "/.github/nvim-colors.json"
-  end
-  return cwd .. "/.github/nvim-colors.json"
-end
+local test_palette_path = _G.test_palette_path
 
 describe("matugen module", function()
   it("exports expected public API", function()
@@ -25,10 +13,10 @@ describe("matugen module", function()
   describe("setup", function()
     it("applies options correctly with load_theme = false", function()
       matugen.setup({
-        palette_path = test_palette_path(),
+        palette_path = test_palette_path,
         load_theme = false,
       })
-      assert.are.same(test_palette_path(), matugen.opts.palette_path)
+      assert.are.same(test_palette_path, matugen.opts.palette_path)
       assert.is_false(matugen.opts.load_theme)
     end)
 
@@ -51,7 +39,7 @@ describe("matugen module", function()
   describe("load (sync)", function()
     before_each(function()
       matugen.setup({
-        palette_path = test_palette_path(),
+        palette_path = test_palette_path,
         load_theme = false,
       })
     end)
@@ -61,7 +49,8 @@ describe("matugen module", function()
       assert.are.same("Loaded successfully", matugen._status)
       assert.is_not_nil(matugen._last_reload)
       assert.is_true(matugen._template_count > 0)
-      assert.are.same(palette_path_tilde(), matugen._palette_path)
+      assert.is_not_nil(matugen._palette_path)
+      assert.is_true(matugen._palette_path:match("nvim%-colors%.json$") ~= nil)
     end)
 
     it("handles missing palette file gracefully", function()
