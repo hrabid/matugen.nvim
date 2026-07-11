@@ -1,0 +1,40 @@
+{
+    "workbench.colorCustomizations": {
+
+        "editor.background": "#111318",
+        "editor.foreground": "#e2e2e9",
+
+        "editorLineNumber.foreground": "#8e9099",
+        "editorLineNumber.activeForeground": "#aac7ff",
+        "editorGutter.addedBackground": "#aac7ff",
+        "editorGutter.modifiedBackground": "#bec6dc",
+        "editorGutter.deletedBackground": "#ffb4ab",
+
+        "editorWidget.border": "#44474e",
+
+        "editorSuggestWidget.selectedBackground": "#274777",
+        "editorSuggestWidget.selectedForeground": "#d6e3ff",
+
+        "editorError.foreground": "#ffb4ab",
+        "editorWarning.foreground": "#bec6dc",
+        "editorInfo.foreground": "#dcbce0",
+
+        "sideBar.background": "#191c20",
+        "sideBarSectionHeader.background": "#282a2f",
+
+        "statusBar.background": "#1d2024",
+        "statusBar.foreground": "#c4c6d0",
+        "statusBarItem.remoteBackground": "#3e4759",
+        "statusBarItem.remoteForeground": "#dae2f9",
+
+        "terminal.inactiveSelectionBackground": "#33353a",
+        "terminal.ansiBrightRed": "#93000a",
+        "terminal.ansiBrightGreen": "#573e5c",
+
+        "button.foreground": "#0a305f",
+
+        "editor.selectionBackground": "#aac7ff33",
+        "editor.wordHighlightBackground": "#bec6dc33",
+        "editor.wordHighlightStrongBackground": "#dcbce033"
+    }
+}
