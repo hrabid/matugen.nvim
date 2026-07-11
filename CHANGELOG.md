@@ -17,7 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Test suite.** Initial specs for setup and palette-missing error handling
   via `PlenaryBustedDirectory` (`tests/matugen_spec.lua`,
   `tests/minimal_init.lua`).
-- **Makefile** with a `test` target for local headless test execution.
+- **`.github/Makefile`** with a `test` target for local headless test execution.
 - **GitHub Actions CI** (`.github/workflows/tests.yml`) running tests on
   pushes/PRs to `main`.
 
