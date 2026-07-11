@@ -8,7 +8,7 @@
 
 Click to watch the demo video below ↴
 
-## [![matugen.nvim demo](https://img.youtube.com/vi/-O9JbfbJub0/maxresdefault.jpg)](https://youtu.be/-O9JbfbJub0)
+[![matugen.nvim demo](https://img.youtube.com/vi/S0zvUow7cmg/maxresdefault.jpg)](https://youtu.be/S0zvUow7cmg)
 
 ---
 
