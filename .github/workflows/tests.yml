@@ -24,5 +24,8 @@ jobs:
           mkdir -p ~/.local/share/nvim/site/pack/vendor/start
           git clone --depth 1 https://github.com/nvim-lua/plenary.nvim ~/.local/share/nvim/site/pack/vendor/start/plenary.nvim
 
+      - name: Check Lua Syntax
+        run: make check-syntax
+
       - name: Run Tests
         run: make test
