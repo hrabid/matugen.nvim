@@ -24,6 +24,9 @@ jobs:
           mkdir -p ~/.local/share/nvim/site/pack/vendor/start
           git clone --depth 1 https://github.com/nvim-lua/plenary.nvim ~/.local/share/nvim/site/pack/vendor/start/plenary.nvim
 
+      - name: Verify palette file exists
+        run: test -f .github/nvim-colors.json && echo "palette file OK" || echo "palette file MISSING"
+
       - name: Check Lua Syntax
         run: make -f .github/Makefile check-syntax
 
