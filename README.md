@@ -14,7 +14,7 @@ Click to watch the demo video below ↴
 
 ## Requirements
 
-- Neovim 0.10+
+- [Neovim](https://github.com/neovim/neovim) 0.10+
 - [matugen](https://github.com/InioX/matugen)
 - [lazy.nvim](https://github.com/folke/lazy.nvim) (recommended)
 
