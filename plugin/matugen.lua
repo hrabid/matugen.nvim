@@ -7,7 +7,7 @@ vim.api.nvim_create_user_command("MatugenReload", function()
 end, { desc = "Reload templates from disk and reapply the theme" })
 
 local _last_signal_ns = 0
-local _debounce_ns = 300 * 1e6 -- 300 ms in nanoseconds
+local _debounce_ns = 50 * 1e6 -- 50 ms in nanoseconds
 
 local signal = (vim.uv or vim.loop).new_signal()
 signal:start(
