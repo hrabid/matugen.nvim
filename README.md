@@ -4,11 +4,7 @@
 
 ---
 
-## Demo
-
-Click to watch the demo video below ↴
-
-[![matugen.nvim demo](https://img.youtube.com/vi/S0zvUow7cmg/maxresdefault.jpg)](https://youtu.be/S0zvUow7cmg)
+https://github.com/user-attachments/assets/5b9e40a9-a8e1-4b9b-badd-f4b667d55f5e
 
 ---
 
