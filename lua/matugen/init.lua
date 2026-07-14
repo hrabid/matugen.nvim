@@ -190,10 +190,17 @@ function M.load(on_done, force_sync)
 	-- Non-blocking read via vim.uv so the main loop is not stalled.
 	-- Highlight application is deferred to vim.schedule() which runs on
 	-- the main thread after the async callbacks complete.
+	-- A generation counter prevents stale reads from a previous
+	-- load_theme call from overwriting a newer palette when async
+	-- reads complete out of order.
+	M._load_gen = (M._load_gen or 0) + 1
+	local gen = M._load_gen
+
 	local uv = vim.uv or vim.loop
 	uv.fs_open(path, "r", 438, function(err_open, fd)
 		if err_open or not fd then
 			vim.schedule(function()
+				if M._load_gen ~= gen then return end
 				notify(
 					"Could not open color file at: " .. path .. "\nUsing fallback color scheme",
 					vim.log.levels.WARN
@@ -207,6 +214,7 @@ function M.load(on_done, force_sync)
 			if err_stat or not stat then
 				uv.fs_close(fd, function() end)
 				vim.schedule(function()
+					if M._load_gen ~= gen then return end
 					notify("Could not stat color file at: " .. path, vim.log.levels.WARN)
 					_apply_highlights({}, path, on_done)
 				end)
@@ -216,6 +224,7 @@ function M.load(on_done, force_sync)
 			uv.fs_read(fd, stat.size, 0, function(err_read, data)
 				uv.fs_close(fd, function() end)
 				vim.schedule(function()
+					if M._load_gen ~= gen then return end
 					if err_read or not data then
 						notify(
 							"Could not read color file at: " .. path .. "\nUsing fallback color scheme",
