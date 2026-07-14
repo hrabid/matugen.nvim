@@ -268,7 +268,8 @@ function M.setup(opts)
 end
 
 --- @param force_sync? boolean
-function M.load_theme(force_sync)
+--- @param on_applied? fun()
+function M.load_theme(force_sync, on_applied)
 	if force_sync == nil then
 		force_sync = true
 	end
@@ -276,6 +277,9 @@ function M.load_theme(force_sync)
 	-- are applied by the _apply_highlights callback.
 	M.load(function()
 		vim.cmd.colorscheme("matugen")
+		if on_applied then
+			on_applied()
+		end
 	end, force_sync)
 end
 
