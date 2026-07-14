@@ -7,6 +7,26 @@ local function notify(msg, lvl)
 	vim.notify("matugen: " .. msg, lvl or vim.log.levels.INFO)
 end
 
+local _last_reload_notify_ns = 0
+local _reload_notify_debounce_ns = 50 * 1e6
+local _first_load = true
+
+local function _notify_reload()
+	if _first_load then
+		_first_load = false
+		return
+	end
+	local uv = vim.uv or vim.loop
+	if uv then
+		local now = uv.hrtime()
+		if now - _last_reload_notify_ns < _reload_notify_debounce_ns then
+			return
+		end
+		_last_reload_notify_ns = now
+	end
+	notify("theme reloaded")
+end
+
 --- @return fun(table, fun(string, table):nil)[]
 local function _load_templates()
 	if M._templates then
@@ -125,6 +145,7 @@ local function _apply_highlights(w, path, on_done)
 		on_done()
 		M._cached_w = nil
 		M._cached_path = nil
+		_notify_reload()
 	end
 end
 

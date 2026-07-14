@@ -19,7 +19,6 @@ signal:start(
 		end
 		_last_signal_ns = now
 		matugen.load_theme(false)
-		vim.notify("matugen: theme reloaded")
 	end)
 )
 
