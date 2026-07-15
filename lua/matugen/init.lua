@@ -7,8 +7,8 @@ local function notify(msg, lvl)
 	vim.notify("matugen: " .. msg, lvl or vim.log.levels.INFO)
 end
 
-local _last_reload_notify_ns = 0
-local _reload_notify_debounce_ns = 50 * 1e6
+local _notify_timer = nil
+local _notify_ms = 100
 local _first_load = true
 
 local function _notify_reload()
@@ -17,14 +17,23 @@ local function _notify_reload()
 		return
 	end
 	local uv = vim.uv or vim.loop
-	if uv then
-		local now = uv.hrtime()
-		if now - _last_reload_notify_ns < _reload_notify_debounce_ns then
-			return
-		end
-		_last_reload_notify_ns = now
+	if not uv then
+		notify("theme reloaded")
+		return
 	end
-	notify("theme reloaded")
+	if _notify_timer then
+		_notify_timer:stop()
+		_notify_timer:close()
+	end
+	_notify_timer = uv.new_timer()
+	_notify_timer:start(_notify_ms, 0, vim.schedule_wrap(function()
+		if _notify_timer then
+			_notify_timer:stop()
+			_notify_timer:close()
+			_notify_timer = nil
+		end
+		notify("theme reloaded")
+	end))
 end
 
 --- @return fun(table, fun(string, table):nil)[]
