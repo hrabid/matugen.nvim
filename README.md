@@ -88,8 +88,10 @@ To check the current configuration, parsing correctness, active templates, and l
 
 ## Supported Plugins
 
+The following plugins are supported via built‑in templates in `lua/matugen/templates`
+
 <details>
-<summary>The following plugins are supported via built‑in templates in `lua/matugen/templates`:</summary>
+<summary>Supported plugins</summary>
 
 - [aerial.nvim](lua/matugen/templates/aerial.lua)
 - [avante.nvim](lua/matugen/templates/avante.lua)
