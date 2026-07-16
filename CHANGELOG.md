@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   deleted. Palette files **must** now be plain `.json` — comments are no longer
   stripped. Update any `.jsonc` palette files by removing comments before use.
 
+- **Palette file format changed to direct semantic keys.** The `nvim-colors.json`
+  palette file no longer uses the `workbench.colorCustomizations` wrapper object.
+  Colors are now keyed directly by semantic names (`surface`, `on_surface`,
+  `primary`, etc.) matching the keys in `lua/matugen/palette.lua`. Users must
+  regenerate their palette file or update it to use the new key names.
+
 ### Added
 
 - **Palette validator (`lua/matugen/validator.lua`).**

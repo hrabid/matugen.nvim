@@ -1,33 +1,7 @@
 local M = {}
+local palette = require("matugen.palette")
 
-M.required_keys = {
-  "editor.background",
-  "sideBar.background",
-  "statusBar.background",
-  "sideBarSectionHeader.background",
-  "terminal.inactiveSelectionBackground",
-  "editor.foreground",
-  "statusBar.foreground",
-  "editorLineNumber.foreground",
-  "editorWidget.border",
-  "editorLineNumber.activeForeground",
-  "button.foreground",
-  "editorSuggestWidget.selectedBackground",
-  "editorSuggestWidget.selectedForeground",
-  "editorWarning.foreground",
-  "statusBarItem.remoteBackground",
-  "statusBarItem.remoteForeground",
-  "editorInfo.foreground",
-  "terminal.ansiBrightGreen",
-  "editorError.foreground",
-  "terminal.ansiBrightRed",
-  "editor.selectionBackground",
-  "editor.wordHighlightBackground",
-  "editor.wordHighlightStrongBackground",
-  "editorGutter.addedBackground",
-  "editorGutter.modifiedBackground",
-  "editorGutter.deletedBackground",
-}
+M.required_keys = palette.keys
 
 local function is_valid_hex(color)
 	if type(color) ~= "string" then
@@ -65,26 +39,13 @@ function M.validate(path)
 	f:close()
 
 	local ok, parsed = pcall(vim.json.decode, content)
-	if not ok or not parsed then
+	if not ok or type(parsed) ~= "table" then
 		result.ok = false
 		table.insert(result.errors, "Failed to decode JSON from palette file: " .. path)
 		return result
 	end
 
-	local colors = parsed["workbench.colorCustomizations"]
-	if not colors then
-		result.ok = false
-		table.insert(result.errors, "Palette file does not contain 'workbench.colorCustomizations'")
-		return result
-	end
-
-	if type(colors) ~= "table" then
-		result.ok = false
-		table.insert(result.errors, "'workbench.colorCustomizations' must be a table/object")
-		return result
-	end
-
-	for key, value in pairs(colors) do
+	for key, value in pairs(parsed) do
 		if
 			type(key) == "string"
 			and type(value) == "string"

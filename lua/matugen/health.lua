@@ -43,14 +43,8 @@ function M.check()
 				local content = f:read("*a")
 				f:close()
 				local ok, parsed = pcall(vim.json.decode, content)
-				if ok and parsed then
-					if parsed["workbench.colorCustomizations"] then
-						health.ok("Palette file parsed successfully and contains 'workbench.colorCustomizations'")
-					else
-						health.error("Palette file does not contain 'workbench.colorCustomizations' block.", {
-							"Ensure your matugen template maps color customization options inside a 'workbench.colorCustomizations' block.",
-						})
-					end
+				if ok and type(parsed) == "table" then
+					health.ok("Palette file parsed successfully")
 				else
 					health.error("Failed to decode JSON from palette file at: " .. palette_path, {
 						"Check for syntax errors in " .. palette_path,

@@ -1,6 +1,6 @@
 # Creating Custom Templates
 
-This plugin bridges the gap between Material You colors and your Neovim environment. It reads a `JSON` file—formatted exactly like VSCode's `workbench.colorCustomizations`—and maps those color keys to Neovim's highlight groups. 
+This plugin bridges the gap between Material You colors and your Neovim environment. It reads a `JSON` file containing semantic color keys and maps them to Neovim's highlight groups. 
 
 `matugen.nvim` uses a modular template system. Each template is a Lua file that receives the current color palette and a high-level API to set Neovim highlights.
 

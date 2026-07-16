@@ -202,16 +202,14 @@ function M.load(on_done, force_sync)
 		f:close()
 
 		local ok, parsed = pcall(vim.json.decode, raw)
-		local w = {}
-		if not ok or not parsed or not parsed["workbench.colorCustomizations"] then
+		if not ok or type(parsed) ~= "table" then
 			notify(
 				"Failed to parse JSON from " .. path .. "\nUsing fallback color scheme",
 				vim.log.levels.WARN
 			)
-		else
-			w = parsed["workbench.colorCustomizations"]
+			parsed = {}
 		end
-		_apply_highlights(w, path, on_done)
+		_apply_highlights(parsed, path, on_done)
 		return
 	end
 
@@ -263,16 +261,14 @@ function M.load(on_done, force_sync)
 					end
 
 					local ok, parsed = pcall(vim.json.decode, data)
-					local w = {}
-					if not ok or not parsed or not parsed["workbench.colorCustomizations"] then
+					if not ok or type(parsed) ~= "table" then
 						notify(
 							"Failed to parse JSON from " .. path .. "\nUsing fallback color scheme",
 							vim.log.levels.WARN
 						)
-					else
-						w = parsed["workbench.colorCustomizations"]
+						parsed = {}
 					end
-					_apply_highlights(w, path, on_done)
+					_apply_highlights(parsed, path, on_done)
 				end)
 			end)
 		end)
