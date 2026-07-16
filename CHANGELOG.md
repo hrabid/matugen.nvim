@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### ⚠ BREAKING CHANGES
+
+- **Removed all JSONC support.** The `lua/matugen/jsonc.lua` module has been
+  deleted. Palette files **must** now be plain `.json` — comments are no longer
+  stripped. Update any `.jsonc` palette files by removing comments before use.
+
 ### Added
 
 - **Palette validator (`lua/matugen/validator.lua`).**

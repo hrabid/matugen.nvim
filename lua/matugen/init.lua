@@ -158,8 +158,6 @@ local function _apply_highlights(w, path, on_done)
 	end
 end
 
-local jsonc = require("matugen.jsonc")
-
 --- @param on_done? fun()
 --- @param force_sync? boolean
 function M.load(on_done, force_sync)
@@ -184,8 +182,8 @@ function M.load(on_done, force_sync)
 			end)
 		end
 		return
-	elseif not path:match("%.[Jj][Ss][Oo][Nn][Cc]?$") then
-		notify("palette_path must end in .json or .jsonc — refusing to open: " .. path, vim.log.levels.ERROR)
+	elseif not path:match("%.[Jj][Ss][Oo][Nn]$") then
+		notify("palette_path must end in .json — refusing to open: " .. path, vim.log.levels.ERROR)
 		return
 	end
 
@@ -200,14 +198,14 @@ function M.load(on_done, force_sync)
 			return
 		end
 
-		local raw = jsonc.prepare_json(f:read("*a"), path)
+		local raw = f:read("*a")
 		f:close()
 
 		local ok, parsed = pcall(vim.json.decode, raw)
 		local w = {}
 		if not ok or not parsed or not parsed["workbench.colorCustomizations"] then
 			notify(
-				"Failed to parse JSONC from " .. path .. "\nUsing fallback color scheme",
+				"Failed to parse JSON from " .. path .. "\nUsing fallback color scheme",
 				vim.log.levels.WARN
 			)
 		else
@@ -264,16 +262,11 @@ function M.load(on_done, force_sync)
 						return
 					end
 
-					-- Strip JSONC comments safely:
-					--   /* ... */ block comments (non-greedy, across lines)
-					--   // line comments only after structural JSON chars or
-					--   pure whitespace, never inside string values.
-					local raw = jsonc.prepare_json(data, path)
-					local ok, parsed = pcall(vim.json.decode, raw)
+					local ok, parsed = pcall(vim.json.decode, data)
 					local w = {}
 					if not ok or not parsed or not parsed["workbench.colorCustomizations"] then
 						notify(
-							"Failed to parse JSONC from " .. path .. "\nUsing fallback color scheme",
+							"Failed to parse JSON from " .. path .. "\nUsing fallback color scheme",
 							vim.log.levels.WARN
 						)
 					else

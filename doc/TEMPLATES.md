@@ -1,6 +1,6 @@
 # Creating Custom Templates
 
-This plugin bridges the gap between Material You colors and your Neovim environment. It reads a `JSON`/`JSONC` file—formatted exactly like VSCode's `workbench.colorCustomizations`—and maps those color keys to Neovim's highlight groups. 
+This plugin bridges the gap between Material You colors and your Neovim environment. It reads a `JSON` file—formatted exactly like VSCode's `workbench.colorCustomizations`—and maps those color keys to Neovim's highlight groups. 
 
 `matugen.nvim` uses a modular template system. Each template is a Lua file that receives the current color palette and a high-level API to set Neovim highlights.
 
@@ -21,7 +21,7 @@ end
 
 ## Available Colors (`c`)
 
-The `c` object contains your theme's colors mapped from the JSONC file. You can see the full list of available keys in `lua/matugen/palette.lua`. 
+The `c` object contains your theme's colors mapped from the JSON file. You can see the full list of available keys in `lua/matugen/palette.lua`. 
 
 Key categories include:
 - **Surfaces:** `surface`, `surface_low`, `surface_container`, `surface_high`

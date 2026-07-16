@@ -42,10 +42,7 @@ function M.check()
 			if f then
 				local content = f:read("*a")
 				f:close()
-				local cleaned = expanded_path:match("%.[Jj][Ss][Oo][Nn][Cc]$")
-					and require("matugen.jsonc").strip_jsonc(content)
-					or content
-				local ok, parsed = pcall(vim.json.decode, cleaned)
+				local ok, parsed = pcall(vim.json.decode, content)
 				if ok and parsed then
 					if parsed["workbench.colorCustomizations"] then
 						health.ok("Palette file parsed successfully and contains 'workbench.colorCustomizations'")

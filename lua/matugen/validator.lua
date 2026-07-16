@@ -1,5 +1,3 @@
-local jsonc = require("matugen.jsonc")
-
 local M = {}
 
 M.required_keys = {
@@ -66,15 +64,10 @@ function M.validate(path)
 	local content = f:read("*a")
 	f:close()
 
-	local cleaned = expanded:match("%.[Jj][Ss][Oo][Nn][Cc]$")
-		and jsonc.strip_jsonc(content)
-		or content
-
-	local ok, parsed = pcall(vim.json.decode, cleaned)
+	local ok, parsed = pcall(vim.json.decode, content)
 	if not ok or not parsed then
 		result.ok = false
-		local ext = expanded:match("%.[Jj][Ss][Oo][Nn][Cc]$") and "JSONC" or "JSON"
-		table.insert(result.errors, "Failed to decode " .. ext .. " from palette file: " .. path)
+		table.insert(result.errors, "Failed to decode JSON from palette file: " .. path)
 		return result
 	end
 
