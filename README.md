@@ -86,12 +86,6 @@ To check the current configuration, parsing correctness, active templates, and l
 
 ---
 
-## VS Code Parity
-
-If you're using my [matugen-editors](https://github.com/Senal-D-A-Gunaratna/matugen-editors) setup, you can point the plugin at your existing `code-colors.json` instead — as long as the color-keys match, both editors should theme from the same palette simultaneously
-
----
-
 ## Supported Plugins
 
 <details>
