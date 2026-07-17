@@ -80,6 +80,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   autocmd events.
 - **Moved validator from `tests/` to `lua/matugen/`**, replacing the
   `dofile`-based loading with a standard `require`.
+- **Removed single-fire signal debouncer.** Signals now fire on every
+  notification without deduplication — the previous one-shot timer gate
+  has been eliminated.
 
 ### ⚠ BREAKING CHANGES
 
