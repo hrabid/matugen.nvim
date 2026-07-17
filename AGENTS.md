@@ -16,7 +16,7 @@ You MUST run `git add -A && git commit -m "message"` after completing any of the
 - Use the **conventional commits** format: `type(scope): description`
 - Keep the description under 72 characters
 - Use the imperative mood ("add feature" not "added feature")
-- Types: `feat`, `fix`, `refactor`, `style`, `docs`, `test`, `chore`, `perf`
+- Types: `feat`, `fix`, `refactor`, `style`, `docs`, `BRAKING_CHANGES!`, `test`, `chore`, `perf`
 
 ## Verification
 
