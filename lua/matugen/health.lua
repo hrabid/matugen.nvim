@@ -16,7 +16,10 @@ function M.check()
 	if vim.fn.executable("matugen") == 1 then
 		health.ok("matugen CLI is installed")
 	else
-		health.info("matugen CLI is not installed or not in system PATH. (Optional if you generate your palette elsewhere and sync it.)")
+		health.info(
+			"matugen CLI is not installed or not in system PATH."
+				.. " (Optional if you generate your palette elsewhere and sync it.)"
+		)
 	end
 
 	-- 3. Palette file validation
@@ -42,8 +45,8 @@ function M.check()
 			if f then
 				local content = f:read("*a")
 				f:close()
-				local ok, parsed = pcall(vim.json.decode, content)
-				if ok and type(parsed) == "table" then
+				local parsed_ok, parsed = pcall(vim.json.decode, content)
+				if parsed_ok and type(parsed) == "table" then
 					health.ok("Palette file parsed successfully")
 				else
 					health.error("Failed to decode JSON from palette file at: " .. palette_path, {
