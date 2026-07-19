@@ -1,6 +1,8 @@
 # matugen.nvim
 
-`matugen.nvim` is a Material You colorscheme for Neovim built around a dedicated template system. It maps your matugen generated colors directly to Neovim highlight groups through a semantic palette without color recomputation
+`matugen.nvim` is a Material You colorscheme for Neovim built around a
+dedicated template system. It maps your matugen generated colors directly to
+Neovim highlight groups through a semantic palette without color recomputation
 
 ---
 
@@ -47,7 +49,8 @@ post_hook = "pkill -SIGUSR1 nvim"
 },
 ```
 
-> **Note:** If the palette file fails to load, the plugin falls back to a built-in dark theme and notifies you
+> **Note:** If the palette file fails to load, the plugin falls back to a
+> built-in dark theme and notifies you
 
 **4. Hyprland opacity** _(optional but recommended)_
 
@@ -55,8 +58,8 @@ Without blur and opacity, transparency won't look right:
 
 ```lua
 hl.window_rule({
- match = { class = "kitty", title = "nvim" },
- opacity = "0.7",
+  match = { class = "kitty", title = "nvim" },
+  opacity = "0.7",
 })
 ```
 
@@ -64,7 +67,8 @@ hl.window_rule({
 
 ## Live Reload
 
-The `post_hook` in your `config.toml` handles reloading automatically on each `matugen` run. To trigger it manually:
+The `post_hook` in your `config.toml` handles reloading automatically on each
+`matugen` run. To trigger it manually:
 
 ```bash
 pkill -SIGUSR1 nvim
@@ -78,7 +82,8 @@ Or from inside Neovim:
 
 ## Plugin health checking
 
-To check the current configuration, parsing correctness, active templates, and loaded status, run:
+To check the current configuration, parsing correctness, active templates, and
+loaded status, run:
 
 ```vim
 :checkhealth matugen
@@ -88,7 +93,8 @@ To check the current configuration, parsing correctness, active templates, and l
 
 ## Supported Plugins
 
-The following plugins are supported via built‑in templates in `lua/matugen/templates`
+The following plugins are supported via built‑in templates in
+`lua/matugen/templates`
 
 <details>
 <summary>Supported plugins</summary>
@@ -131,7 +137,9 @@ The following plugins are supported via built‑in templates in `lua/matugen/tem
 
 ## Customization
 
-All highlight groups derive from a single semantic palette in `lua/matugen/palette.lua`. Adding support for a new plugin or UI component stays consistent by design
+All highlight groups derive from a single semantic palette in
+`lua/matugen/palette.lua`. Adding support for a new plugin or UI component
+stays consistent by design
 
 To extend it, see [Creating Custom Templates](doc/TEMPLATES.md)
 
@@ -139,7 +147,9 @@ To extend it, see [Creating Custom Templates](doc/TEMPLATES.md)
 
 ## Contributing
 
-Contributions are more than welcome! If you want to add support for another plugin or fix a bug, feel free to open a Pull Request. Let's make this colorscheme even better together!
+Contributions are more than welcome! If you want to add support for another
+plugin or fix a bug, feel free to open a Pull Request. Let's make this
+colorscheme even better together!
 
 ---
 
