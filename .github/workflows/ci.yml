@@ -33,10 +33,13 @@ jobs:
       - name: Install lua-language-server
         run: |
           LUALS_URL="$(
-            curl -fsSL https://api.github.com/repos/LuaLS/lua-language-server/releases/latest \
+            curl -fsSL --retry 5 --retry-delay 10 \
+              -H "Accept: application/vnd.github+json" \
+              ${GITHUB_TOKEN:+-H "Authorization: Bearer $GITHUB_TOKEN"} \
+              https://api.github.com/repos/LuaLS/lua-language-server/releases/latest \
               | jq -r '.assets[] | select(.name | endswith("linux-x64.tar.gz")) | .browser_download_url'
           )"
-          curl -fsSL --retry 3 "$LUALS_URL" -o /tmp/luals.tar.gz
+          curl -fsSL --retry 5 --retry-delay 10 "$LUALS_URL" -o /tmp/luals.tar.gz
           mkdir -p /tmp/luals
           tar xzf /tmp/luals.tar.gz -C /tmp/luals
           echo "/tmp/luals/bin" >> $GITHUB_PATH
