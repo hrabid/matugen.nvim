@@ -56,6 +56,19 @@ post_hook = "pkill -SIGUSR1 nvim"
 
 Without blur and opacity, transparency won't look right:
 
+To get proper transparency in Neovim without ruining your regular terminal opacity, use (hyprfade.nvim)[https://github.com/Senal-D-A-Gunaratna/hyprfade.nvim]
+
+Why use this instead of raw Hyprland config (hl.window_rule)?
+Standard Hyprland rules rely on window class or title matches (e.g., matching title:^nvim$). This breaks easily because:
+
+- Inconsistent Titles: Launching Neovim from a file manager (like Yazi), a subshell, or an alias often fails to update the window title before Hyprland applies the rule.
+
+- All-or-Nothing Terminal Transparency: Hyprland rules make your entire terminal transparent all the time.
+
+- Dynamic Control: hyprfade.nvim dynamically sets transparency only when Neovim is active, restoring normal terminal opacity as soon as you exit.
+
+Or use the native lua config
+
 ```lua
 hl.window_rule({
   match = { class = "kitty", title = "nvim" },
