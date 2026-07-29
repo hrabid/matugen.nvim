@@ -56,7 +56,7 @@ post_hook = "pkill -SIGUSR1 nvim"
 
 Without blur and opacity, transparency won't look right:
 
-To get proper transparency in Neovim without ruining your regular terminal opacity, use (hyprfade.nvim)[https://github.com/Senal-D-A-Gunaratna/hyprfade.nvim]
+To get proper transparency in Neovim without ruining your regular terminal opacity, use [hyprfade.nvim](https://github.com/Senal-D-A-Gunaratna/hyprfade.nvim)
 
 Why use this instead of raw Hyprland config (hl.window_rule)?
 Standard Hyprland rules rely on window class or title matches (e.g., matching title:^nvim$). This breaks easily because:
